@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { CardContent, CardDescription } from "@/components/ui/card";
-import { EmptyCard } from "@/components/EmptyCard";
 import { Trash2 } from "lucide-react";
 import {
   DndContext,
@@ -23,6 +22,7 @@ import { CSS } from "@dnd-kit/utilities";
 import { LegacyRef, ReactNode, useContext, useMemo, useRef } from "react";
 import { UploadContext, UploadContextType } from "./uploadContext";
 import { FileState } from "./Utils";
+import { EmptyCard } from "./EmptyCard";
 
 export function UploadedFilesCard() {
   // Sensors for DnD
