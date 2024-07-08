@@ -13,8 +13,8 @@ import { Progress } from "@/components/ui/progress";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { UploadIcon, X } from "lucide-react";
 import { useContext } from "react";
-import { UploadContext, UploadContextType } from "./uploadContext";
-import { useControllableState } from "./useControllableState";
+import { UploadContext, UploadContextType } from "./hooks/uploadContext";
+import { useControllableState } from "./hooks/useControllableState";
 
 interface FileUploaderProps extends React.HTMLAttributes<HTMLDivElement> {
   /**

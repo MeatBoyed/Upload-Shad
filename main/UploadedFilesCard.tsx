@@ -20,7 +20,7 @@ import {
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { LegacyRef, ReactNode, useContext, useMemo, useRef } from "react";
-import { UploadContext, UploadContextType } from "./uploadContext";
+import { UploadContext, UploadContextType } from "./hooks/uploadContext";
 import { FileState } from "./Utils";
 import { EmptyCard } from "./EmptyCard";
 

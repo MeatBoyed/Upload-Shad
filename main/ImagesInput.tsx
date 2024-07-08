@@ -2,7 +2,7 @@ import { FileUploader } from "./FileUploader";
 import { cn } from "./FileInputUtils";
 import React from "react";
 import { UploadedFilesCard } from "./UploadedFilesCard";
-import { UploadContextProvider } from "./uploadContext";
+import { UploadContextProvider } from "./hooks/uploadContext";
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
