@@ -3,66 +3,40 @@
 import Image from "next/image";
 import { CardContent, CardDescription } from "@/components/ui/card";
 import { Trash2 } from "lucide-react";
-import {
-  DndContext,
-  closestCenter,
-  KeyboardSensor,
-  PointerSensor,
-  useSensor,
-  useSensors,
-  UniqueIdentifier,
-} from "@dnd-kit/core";
-import {
-  SortableContext,
-  sortableKeyboardCoordinates,
-  useSortable,
-  verticalListSortingStrategy,
-} from "@dnd-kit/sortable";
+import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors, UniqueIdentifier } from "@dnd-kit/core";
+import { SortableContext, sortableKeyboardCoordinates, useSortable, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { LegacyRef, ReactNode, useContext, useMemo, useRef } from "react";
+import { LegacyRef, ReactNode, useContext, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { UploadContext, UploadContextType } from "./hooks/uploadContext";
+// import { DragDropContext, Draggable, DraggableProvided, Droppable } from "react-beautiful-dnd";
+import { DragDropContext, Draggable, DraggableProvided, Droppable, DropResult } from "@hello-pangea/dnd";
 import { FileState } from "./Utils";
 import { EmptyCard } from "./EmptyCard";
+import { twMerge } from "tailwind-merge";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 export function UploadedFilesCard() {
-  // Sensors for DnD
-  const sensors = useSensors(
-    useSensor(PointerSensor),
-    useSensor(KeyboardSensor, {
-      coordinateGetter: sortableKeyboardCoordinates,
-    })
-  );
+  const { uploadedImages, handleDelete, handleReOrder } = useContext(UploadContext) as UploadContextType;
 
-  const { uploadedImages, handleDelete, handleReOrder } = useContext(
-    UploadContext
-  ) as UploadContextType;
+  const handleDragDrop = (result: DropResult) => {
+    console.log(result);
 
-  const images = useMemo(
-    () =>
-      uploadedImages && uploadedImages.length > 0 ? (
-        uploadedImages.map((fileState, index) => (
-          <SortableItem
-            key={fileState.key}
-            id={fileState.key}
-            fileState={fileState}
-          >
-            <div
-              className="absolute top-2 right-2 hover:cursor-pointer bg-white rounded-full p-2 flex justify-center items-center text-black hover:bg-white hover:text-red-500 "
-              onClick={() => handleDelete(fileState)} // Takes 2,3,4 clicks to actually delete
-            >
-              <Trash2 size={20} />
-            </div>
-          </SortableItem>
-        ))
-      ) : (
-        <EmptyCard
-          title="No files uploaded"
-          description="Upload some files to see them here"
-          className="w-full"
-        />
-      ),
-    [uploadedImages]
-  );
+    if (!result.destination) return;
+
+    handleReOrder(result.source.index, result.destination.index);
+  };
+
+  const images = useMemo(() => {
+    if (uploadedImages && uploadedImages.length > 0) {
+      return uploadedImages.map((fileState, index) => (
+        <Draggable draggableId={index.toString()} key={index} index={index}>
+          {(provided) => <ImageCard provided={provided} fileState={fileState} onDelete={() => handleDelete(fileState)} />}
+        </Draggable>
+      ));
+    } else {
+      <EmptyCard title="No files uploaded" description="Upload some files to see them here" className="w-full" />;
+    }
+  }, [uploadedImages]);
 
   return (
     <div className="flex justify-center items-start flex-col w-full gap-5 ">
@@ -75,69 +49,57 @@ export function UploadedFilesCard() {
         </CardDescription>
       </div>
       <CardContent className="p-0 w-full">
-        <DndContext
-          sensors={sensors}
-          collisionDetection={closestCenter}
-          onDragEnd={handleReOrder}
-        >
-          <SortableContext
-            items={uploadedImages?.map((file) => file.key) || []} // Supply the a String unique value (or exact value) to Identify elements
-            strategy={verticalListSortingStrategy}
-          >
-            <div
-              className="grid gap-3 lg:grid-cols-2 w-full"
-              onClick={() => console.log("Pleasee")}
-            >
-              {images}
-              {/* Render out Sortable Items, passing in the Card to render */}
-            </div>
-          </SortableContext>
-        </DndContext>
+        {/* <div className="grid gap-3 lg:grid-cols-2 w-full" > */}
+        <DragDropContext onDragEnd={handleDragDrop}>
+          <Droppable droppableId="droppable-1" direction={"vertical"} type="group">
+            {(provided) => (
+              <div className="flex h-full gap-2 flex-wrap overflow-hidden" {...provided.droppableProps} ref={provided.innerRef}>
+                {images}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
+        {/* Render out Sortable Items, passing in the Card to render */}
       </CardContent>
     </div>
   );
 }
 
 // DnD kit's Sortable item to handle sort, renders out passed children (card)
-export function SortableItem({
-  id,
+export function ImageCard({
   fileState,
-  children,
+  provided,
+  onDelete,
 }: {
-  id: UniqueIdentifier;
+  provided: DraggableProvided;
   fileState: FileState;
-  children: ReactNode;
+  onDelete: () => void;
 }) {
-  const { attributes, listeners, node, setNodeRef, transform, transition } =
-    useSortable({ id: id });
-
-  const style = {
-    transform: CSS.Transform.toString(transform),
-    transition,
-  };
-
   return (
     <div
-      ref={setNodeRef}
-      style={style}
-      onClick={() => console.log("Heelo fro top")}
-      {...attributes}
-      {...listeners}
+      className="flex flex-col items-end justify-start w-full border"
+      {...provided.dragHandleProps}
+      {...provided.draggableProps}
+      ref={provided.innerRef}
     >
-      <div className="relative aspect-video w-full border">
+      <AspectRatio ratio={4 / 3}>
         <Image
-          src={
-            typeof fileState.file === "string"
-              ? fileState.file
-              : URL.createObjectURL(fileState.file)
-          }
+          src={typeof fileState.file === "string" ? fileState.file : URL.createObjectURL(fileState.file)}
           alt={`image 1`}
           fill
+          quality={35}
           className="rounded-md object-cover"
         />
-        <div className="absolute top-0 right-0 w-full h-full rounded-md delBtn">
-          <div className="bg-black opacity-40 w-full h-full" />
-          {children}
+      </AspectRatio>
+      <div className="absolute flex flex-col items-center justify-center pt-1 pr-1 gap-1">
+        {/* Remove Icon */}
+        <div
+          onClick={onDelete}
+          style={{ background: "white" }}
+          className="flex h-8 w-8 shadow-lg cursor-pointer items-center justify-center rounded-full border  bg-white bg-opacity-70 "
+        >
+          <Trash2 size={18} className="text-black " />
         </div>
       </div>
     </div>

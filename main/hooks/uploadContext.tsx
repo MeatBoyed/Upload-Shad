@@ -1,15 +1,14 @@
 "use client";
 
 import React, { useState, useEffect, createContext, useCallback } from "react";
-import { ServerUser } from "@/Server/controllers/userController";
-import { AWS_S3_BASE_URL } from "@/Server/utils/utils";
 import { arrayMove } from "@dnd-kit/sortable";
-import { Active, DragEndEvent, Over } from "@dnd-kit/core";
-import {
-  convertDeletedImages,
-  convertUploadedImages,
-  FileState,
-} from "./Utils";
+import { convertDeletedImages, convertUploadedImages, FileState } from "../Utils";
+
+const AWS_S3_BASE_URL = process.env.NEXT_PUBLIC_AWS_S3_BASE_URL;
+
+if (!AWS_S3_BASE_URL) {
+  throw new Error("AWS Base Url could not be found in .env file. Therefore Upload Context is unable to generate S3 Bucket urls");
+}
 
 // Enabling TS features
 export type UploadContextType = {
@@ -17,17 +16,13 @@ export type UploadContextType = {
   delImages: FileState[];
   handleDelete: (deletedFile: FileState) => void;
   handleUpload: (files: File[]) => Promise<void>;
-  handleReOrder: (event: DragEndEvent) => void;
+  handleReOrder: (source: number, destination: number) => void;
 };
 
 export const UploadContext = createContext<UploadContextType | null>(null);
 
 export const UploadContextProvider: React.FC<{
-  handleChange: (
-    uploadedImages: { newImages: File[]; order: string[] },
-    deletedImages?: string[],
-    newImages?: File[]
-  ) => void;
+  handleChange: (uploadedImages: { newImages: File[]; order: string[] }, deletedImages?: string[], newImages?: File[]) => void;
   defaultImages?: string[];
   children: React.ReactNode;
 }> = ({ children, defaultImages, handleChange }) => {
@@ -64,8 +59,7 @@ export const UploadContextProvider: React.FC<{
   const handleDelete = (deletedFile: FileState) => {
     console.log("Deleting file: ", deletedFile);
     // Remove deleted file from state
-    const images: FileState[] =
-      uploadedImages?.filter((image) => image.key != deletedFile.key) || [];
+    const images: FileState[] = uploadedImages?.filter((image) => image.key != deletedFile.key) || [];
 
     // Ensure Image is already uploaded & Behave assuming Property is already created
     if (
@@ -78,36 +72,35 @@ export const UploadContextProvider: React.FC<{
       setUploadedImages(images); // Set Image State
 
       // Update Images field (new Images), images Order field, and deleted Images field in form
-      handleChange(
-        convertUploadedImages(images),
-        convertDeletedImages([...deletedImages, deletedFile])
-      ); // Enforces AWS S3 deletion is necessary
+      handleChange(convertUploadedImages(images), convertDeletedImages([...deletedImages, deletedFile])); // Enforces AWS S3 deletion is necessary
     }
 
     // Ensure
-    if (
-      deletedFile.progress === "PENDING" &&
-      deletedFile.file instanceof File
-    ) {
+    if (deletedFile.progress === "PENDING" && deletedFile.file instanceof File) {
       setUploadedImages(images); // Set Image State;
       handleChange(convertUploadedImages(images)); // Enforces AWS S3 uploading is necessary
     }
   };
 
+  const reorder = (list: FileState[], startIndex: number, endIndex: number) => {
+    const result = Array.from(list);
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed || "");
+
+    return result;
+  };
+
   // Check for a change in items order
-  const handleDragEnd = function handleDragEnd(event: DragEndEvent) {
-    const { active, over } = event;
-    // if (over && active.id !== over.id) onHandleDragEnd(active, over);
-    if (over && active.id !== over.id) {
-      const fileStateIds = uploadedImages?.map((file) => file.key) || [];
-      const oldIndex = fileStateIds.indexOf(active.id.toString());
-      const newIndex = fileStateIds.indexOf(over.id.toString());
+  const handleDragEnd = function handleDragEnd(source: number, destination: number) {
+    const fileStateIds = uploadedImages?.map((file) => file.key) || [];
+    // const oldIndex = fileStateIds.indexOf(destination);
+    // const newIndex = fileStateIds.indexOf(source);
 
-      const newImages = arrayMove(uploadedImages || [], oldIndex, newIndex);
+    const newImages = reorder(uploadedImages || [], source, destination);
+    // const newImages = arrayMove(uploadedImages || [], oldIndex, newIndex);
 
-      setUploadedImages(newImages);
-      handleChange(convertUploadedImages(newImages));
-    }
+    setUploadedImages(newImages);
+    handleChange(convertUploadedImages(newImages));
   };
 
   return (
