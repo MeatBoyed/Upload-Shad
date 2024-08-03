@@ -1,5 +1,5 @@
 export const siteConfig = {
-  name: "UploadShad",
+  name: "UploadShad File/Image Uploader",
   author: "Charles Rossouw",
   description: `A highly customizable, accessible, and unopinionated Image Uploader component built with Shadcn UI.`,
   ogImage: "https://emblor.jaleelbennett.com/og.jpg",
