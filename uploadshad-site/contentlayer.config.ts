@@ -31,6 +31,7 @@ export const Docs = defineDocumentType(() => ({
 export default makeSource({
   contentDirPath: "content",
   documentTypes: [Docs],
+  disableImportAliasWarning: true,
   mdx: {
     rehypePlugins: [
       [
