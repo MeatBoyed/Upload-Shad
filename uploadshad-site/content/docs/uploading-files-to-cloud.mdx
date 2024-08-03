@@ -1,0 +1,84 @@
+---
+title: Uploading Files To The Cloud
+description: Learn how to take the provided files from UploadShad and upload it any storage solution of your choice.
+---
+
+Learn [how to install UploadShad](/Installation)
+Learn [how implement UploadhShad in Shadcn Form](/integrations/shadcn-form)
+
+## Overview
+
+UploadhShad only handles the implementation of allowing user's to Drop files into your site, and mange the file(s) like a normal Form Input element, while allowing user's to remove and sort (existing) files.
+This is done to allow UploadShad to be less opinionated on your storage implementation.
+
+### BASE_URL Configuration
+
+However, for UploadShad to be more user-friendly, it does expect a **AWS_S3_BASE_URL** environment to build urls for image previewing.
+You can provide a non S3 base url, that matches your storage solution choice.
+
+<br />
+
+```
+AWS_S3_BASE_URL=<your_storage_solutions_base_url>
+```
+
+Learn more about [State Management for more custom use cases](/state-management).
+
+## Implementation Considerations
+
+Because UploadShad only doesn't upload images to a storage solution, it will always return [uploaded Images, **newImages**](/state-management), as a [**File** type](https://developer.mozilla.org/en-US/docs/Web/API/File).
+
+**Note**
+
+- This will require you to either upload the Files Client-Side or send it to your API through the [**FormData** object](https://developer.mozilla.org/en-US/docs/Web/API/FormData).
+- This is not yet compatible with [Hono.js RPC Client](https://hono.dev/docs/guides/rpc#client).
+
+### Example
+
+This is my function to manage uploading the **formData** values from UploadShad to Upload and keep my S3 Bucket and Database in sync with the upload files.
+
+<br />
+
+```tsx
+import {(PostImageError, PostImagesResponse, UploadedImages)} from "@/components/UploadShad/server/honoS3Types";
+
+async function manageImages(
+stockId: number,
+newImages: any[],
+order: string[],
+BASE_URL: string
+): Promise<{ images: UploadedImages[]; error: string }> {
+let newImages: UploadedImages[] = []; // List of image urls to simply store in database
+let uploadRes: PostImagesResponse; // Use your implementation of expected response with an error
+
+// Skip uploading and formatting if there are no new images
+if (newImages.length > 0) {
+uploadRes = await PostImagesToS3(stockId.toString(), stockId.toString(), newImages); // Your implementation of file uploading
+if (uploadRes.error != PostImageError.NoError) return { images: [], error: uploadRes.error.toString() }; // Your implementation of error handling
+}
+
+// Ensure Uploaded & existing images are in the correct order - By matching Names and URLs
+order.forEach((imageId) => {
+// Push straight if it's a URL
+if (imageId.startsWith(BASE_URL)) return newImages.push({ fileName: imageId, url: imageId });
+
+    // Find uploaded image that matches fileName
+    uploadRes.images.forEach((image) => image.fileName === imageId && newImages.push(image));
+
+});
+
+return { images: newImages, error: "" };
+}
+```
+
+This extracts the complication of determining where to place the newly uploaded local files, in relation to what the database is currently storing (passed to the defaultValue when component is rendered), so you can focus on simply implementing uploading the file to the cloud.
+
+## Conclusion
+
+I trust you have the capabilities to configure the actual uploading of files to the cloud.
+
+However, I do intended to configure UploadShad to handle a "pre-signed" approach of uploading files, and use a provided function that implement a custom storage solution approach. This would also be beneficial for keeping your storage up to date with deleted and failed images.
+
+Learn [how to install UploadShad](/Installation).
+
+Learn [how implement UploadhShad in Shadcn Form](/integrations/shadcn-form).

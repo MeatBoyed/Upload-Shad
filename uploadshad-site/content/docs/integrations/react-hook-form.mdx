@@ -1,0 +1,149 @@
+---
+title: React Hook Form
+description: Learn how to integrate UploadShad with React Hook Form.
+---
+
+In this guide, we will take a look at integrating UploadShad with [React Hook Form](https://react-hook-form.com/), a popular form library for React applications. React Hook Form is a lightweight and performant library that allows you to build forms with ease. By integrating UploadShad with React Hook Form, you can create a fully-featured tag input component that is highly customizable and accessible.
+
+<Tabs defaultValue="preview" className="relative mr-auto w-full">
+  <div className="flex items-center justify-between pb-3">
+    <TabsList className="w-full justify-start rounded-none border-b bg-transparent p-0">
+      <TabsTrigger
+        value="preview"
+        className="relative h-9 rounded-none border-b-2 border-b-transparent bg-transparent px-4 pb-3 pt-2 font-semibold text-muted-foreground shadow-none transition-none data-[state=active]:border-b-primary data-[state=active]:text-foreground data-[state=active]:shadow-none"
+      >
+        Preview
+      </TabsTrigger>
+      <TabsTrigger
+        value="code"
+        className="relative h-9 rounded-none border-b-2 border-b-transparent bg-transparent px-4 pb-3 pt-2 font-semibold text-muted-foreground shadow-none transition-none data-[state=active]:border-b-primary data-[state=active]:text-foreground data-[state=active]:shadow-none"
+      >
+        Code
+      </TabsTrigger>
+    </TabsList>
+  </div>
+  <TabsContent value="preview" className="relative rounded-md border">
+    <ReactHookFormDemo />
+  </TabsContent>
+  <TabsContent value="code">
+    <div className="flex flex-col space-y-4">
+      <div className="w-full rounded-md [&_pre]:my-0 [&_pre]:max-h-[350px] [&_pre]:overflow-auto">
+      <CodeBlock value={`
+    import { z } from 'zod';
+    import { useForm } from 'react-hook-form';
+    import React from 'react';
+    import { UploadShad } from "@/components/UploadShad/main
+
+    export function ReactHookFormDemo() {
+      const initFormValues = false;
+      const { control, handleSubmit, setValue } = useForm();
+
+      const onSubmit = (data) => {
+        console.log(data.images); // Process tag data
+      };
+
+      return (
+      <section className="z-10 w-full flex flex-col items-center text-center gap-5">
+        <div id="try" className="w-full py-8">
+          <div className="w-full relative my-4 flex flex-col space-y-2">
+            <div className="preview flex min-h-[350px] w-full justify-center p-10 items-center mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 relative rounded-md">
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <Controller
+                name="images"
+                control={control}
+                render={({ field }) => (
+                  <UploadShad
+                  {...field}
+                  maxFiles={5}
+                  maxSize={5 * 1024 * 1024}
+                  defaultValues={field.value}
+                  handleChange={(uploadedImages, deletedImages) => {
+                    // Only Set Deleted images & Images Order State if form is Pre-Populated
+                    if (!initFormValues) {
+                    if (deletedImages) setValue("deletedImages", deletedImages);
+                    setValue("imagesOrder", uploadedImages.order);
+                    }
+                    setValue("images", uploadedImages.newImages);
+                    }}
+                  />
+                )}
+                />
+              <Button type="submit">Submit</Button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+
+}
+
+`}/>
+
+</div>
+</div>
+
+  </TabsContent>
+</Tabs>
+
+## Installation
+
+First, install UploadShad and React Hook Form by running the following command:
+
+<br />
+
+```bash
+npm install emblor react-hook-form
+# Or, use any package manager of your choice.
+```
+
+## Integration with React-Hook-Form
+
+Integrating UploadShad with react-hook-form allows for easy form validation, submission, and more complex forms management. Here's how to integrate effectively:
+
+### Basic integration
+
+<br />
+
+```tsx
+import { useForm, Controller } from "react-hook-form";
+import { UploadShad } from "./uploadshad/main";
+
+function TagForm() {
+  const { control, handleSubmit, setValue } = useForm();
+
+  const onSubmit = (data) => {
+    console.log(data.images); // Process tag data
+  };
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Controller
+        name="images"
+        control={control}
+        render={({ field }) => (
+          <UploadShad
+            {...field}
+            maxFiles={5}
+            maxSize={5 * 1024 * 1024}
+            defaultValues={field.value}
+            handleChange={(uploadedImages, deletedImages) => {
+              // Only Set Deleted images & Images Order State if form is Pre-Populated
+              if (!initFormValues) {
+                if (deletedImages) setValue("deletedImages", deletedImages);
+                setValue("imagesOrder", uploadedImages.order);
+              }
+              setValue("images", uploadedImages.newImages);
+            }}
+          />
+        )}
+      />
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+
+export default TagForm;
+```
+
+Overall the integration is straightforward. We use the Controller component from react-hook-form to manage the input field. The Controller component takes a name prop, which is the name of the field in the form data. The render prop is a function that returns the input component. In this case, we return the UploadShad component.

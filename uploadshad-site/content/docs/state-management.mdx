@@ -1,0 +1,111 @@
+---
+title: State Management
+description: Learn how State Management works in UploadShad to integrate more smoothly for custom integrations
+---
+
+## Overview
+
+Uploaded files and their respective states are stored within the **UploadContext** which is shared between the **FileUploader** (The Dropzone) and the **UploadedFiles** (File preview, and drag n drop sorting) components.
+
+Learn more about [useContext in Nextjs and React](https://vercel.com/guides/react-context-state-management-nextjs).
+
+##### UploadContext Responsibilities
+
+- Stores the Uploaded Files
+- Stores the specific order of Files (uploaded files & upload urls)
+- Stores the Deleted Files
+
+## Accessing the provided States
+
+UploadedContext will always invoke the Callback function passed into the UploadShad **handleChange** prop.
+
+### HandleChange
+
+<br />
+Type
+```tsx
+handleChange: (uploadedImages: { newImages: File[]; order: string[] }, 
+  deletedImages?: string[], newImages?: File[]) => void
+````
+
+<br />
+Example{" "}
+
+```tsx handleChange={(uploadedImages, deletedImages) => {
+  if (deletedImages) setValue("deletedImages", deletedImages); // Store deleted Files
+  setValue("imagesOrder", uploadedImages.order); // Store File Order
+  setValue("images", uploadedImages.newImages); // Stores Uploaded Files
+}}
+
+```
+
+<br />
+
+If you have default values (currently only supports Image Urls), its recommended that you manage the incoming state in **handleChange** by only tracking deleted files only if the default values are present.
+
+Checkout the Difference between newImages and order below.
+
+<br />
+```tsx{" "}
+
+handleChange={(uploadedImages, deletedImages) => {
+if (defaultValue) {
+if (deletedImages) setValue("deletedImages", deletedImages); // Store deleted Files
+setValue("imagesOrder", uploadedImages.order); // Store File Order
+}
+setValue("images", uploadedImages.newImages); // Stores Uploaded Files
+}}
+
+````
+
+## Difference between newImages & order
+
+**newImages** (files) are as implied, the newly uploaded local files that are ready for uploading to the cloud.
+The **Order** is the complete merged list of local and pre-uploaded files (currently only supports image urls), that can be used to retain and manage state within your database.
+
+More specifically - Order is simply a direct mapper list for detecting the specific order uploaded files (image urls) and local files (sourced from the user's input) to the **images** array.
+This allows you to only upload the local files, and still keep your list of urls (or files) in order after they've been uploaded.
+
+#### Breakdown
+
+- **newImages**: newly uploaded local files.
+- **order**: complete merged list of local and pre-uploaded files
+
+### Example
+
+This is how I'm using the **newImages** and **order** values to keep my S3 Bucket and Database in sync with the uploaded files.
+
+<br />
+Type
+```tsx
+import { PostImageError, PostImagesResponse, UploadedImages } from "@/components/UploadShad/server/honoS3Types";
+async function manageImages(
+  stockId: number,
+  newImages: any[],
+  order: string[],
+  BASE_URL: string
+): Promise<{ images: UploadedImages[]; error: string }> {
+  let newImages: UploadedImages[] = []; // List of image urls to simply store in database
+  let uploadRes: PostImagesResponse; // Use your implementation of expected response with an error
+
+// Skip uploading and formatting if there are no new images
+if (newImages.length > 0) {
+uploadRes = await PostImagesToS3(stockId.toString(), stockId.toString(), newImages); // Your implementation of file uploading
+if (uploadRes.error != PostImageError.NoError) return { images: [], error: uploadRes.error.toString() }; // Your implementation of error handling
+}
+
+// Ensure Uploaded & existing images are in the correct order - By matching Names and URLs
+order.forEach((imageId) => {
+// Push straight if it's a URL
+if (imageId.startsWith(BASE_URL)) return newImages.push({ fileName: imageId, url: imageId });
+
+    // Find uploaded image that matches fileName
+    uploadRes.images.forEach((image) => image.fileName === imageId && newImages.push(image));
+
+});
+
+return { images: newImages, error: "" };
+}
+````
+
+This extracts the complication of determining where to place the newly uploaded local files, in relation to what the database is currently storing (passed to the defaultValue when component is rendered), so you can focus on simply implementing uploading the file to the cloud.

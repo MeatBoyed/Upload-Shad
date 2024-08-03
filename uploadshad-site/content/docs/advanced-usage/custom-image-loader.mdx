@@ -1,0 +1,63 @@
+---
+title: Custom Image Loader
+description: Learn how to use a Custom Image Loader for Nextjs.
+---
+
+## Overview
+
+UploadShad renders Images using the [Nextjs Image component](https://nextjs.org/docs/app/api-reference/components/image), which allows you to use a Custom Loader.
+There are many ways to configure the Nextjs Image Loader, so use what's best for you.
+
+Learn more about [Nextjs Image Loader](https://nextjs.org/docs/app/api-reference/components/image#loaderfile).
+
+## ImageCard Component
+
+The direct code showing how UploadShad displays image previews
+
+<br />
+
+```tsx
+<AspectRatio ratio={4 / 3}>
+  <Image
+    src={typeof fileState.file === "string" ? fileState.file : URL.createObjectURL(fileState.file)} // Determine if file is a url or local file
+    alt={`image 1`}
+    fill
+    quality={35}
+    loader={customLoader ? customLoader : undefined} // Where custom loader method is implemented directly on Image
+    className="rounded-md object-cover"
+  />
+</AspectRatio>
+```
+
+<br />
+
+## Usage
+
+How to directly provide your Custom Image Loader to UploadShad.
+
+<br />
+
+```tsx
+import { YourCustomLoader } from "path-to-loader";
+
+<UploadShad
+  // ...other Required props
+  customLoader={YourCustomLoader}
+/>;
+```
+
+<br />
+
+### Thats it!
+
+You have successfully used your Custom Loader. 🎉
+
+<br />
+
+Learn more about [Integrating with Shadcn Form](/integrations/shadcn-form)
+
+Learn more about [Integrating with React Hook Form](/integrations/react-hook-form)
+
+Learn more about [uploading Files to the Cloud (database/API).](/)
+
+Learn more about [how file state management works](/file-state-management), useful for more custom integrations/use cases.

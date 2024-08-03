@@ -1,0 +1,88 @@
+---
+title: UploadShad
+description: Learn how to use a UploadShad through it's API reference.
+---
+
+## Overview
+
+UploadShad is a highly customizable, accessible, and un-opinionated Image Uploader component built for ShadCN Forms and React applications. It provides seamless integration, appropriate form error handling, and un-opinionated method of final uploading of files to storage solution.
+
+**Note**  
+UploadShad only handles the implementation of allowing user's to Drop files into your site, and mange the file(s) like a normal Form Input element, while allowing user's to remove and sort (existing) files. This is done to allow UploadShad to be less opinionated on your storage implementation.
+
+## Component implementation
+
+UploadShad is build from two components: **FileUploader** and **UploadedFiles** which function as implied.
+
+##### UploadShad Prop Types
+
+<br />
+
+```tsx
+defaultValues?: string[] // Array of default images for the input
+maxFiles?: number // The maximum number of files that can be uploaded.
+maxSize: number // The maximum size of the files that can be uploaded, in bytes.
+handleChange: (uploadedImages: {newImages: File[]; order: string[]}, deletedImages?: string[], newImages?: File[]) => void;
+  // A function that is called when the files are changed.
+customLoader?: () => string // An optional function that returns a string to be used as a custom loader.
+```
+
+<br />
+
+##### UploadShad
+
+<br />
+
+```tsx
+const UploadShad = React.forwardRef<HTMLInputElement, UploadShadProps>(
+  ({ className, type, defaultValues, handleChange, maxFiles, maxSize, customLoader, ...props }, ref) => {
+    return (
+      <UploadContextProvider defaultImages={defaultValues} handleChange={handleChange}>
+        {/* Passing down Tailwind styles */}
+        <div className={cn("w-full flex justify-center items-center gap-5 flex-col", className)}>
+          <FileUploader maxFiles={maxFiles} maxSize={maxSize} multiple /> // Drop zone for accepting Files
+          <UploadedFiles customLoader={customLoader} /> // Image (File) Previewer and Drag'n'Drop sorter
+        </div>
+      </UploadContextProvider>
+    );
+  }
+);
+UploadShad.displayName = "ImagesInput";
+```
+
+<br />
+
+## Usage
+
+Simplest implementation of UploadShad.
+
+<br />
+
+```tsx
+//... form
+<UploadShad
+  maxFiles={MAXFILES}
+  maxSize={5 * 1024 * 1024} // 5 MB
+  handleChange={(uploadedImages, deletedImages) => {
+    if (deletedImages)
+      // Store Deleted Files
+      console.log(uploadedImages.order); // Store File Order
+    console.log(uploadedImages.newImages); // Stores Uploaded (local) Files
+  }}
+/>
+```
+
+<br />
+
+- Checkout how to [integrate UploadShadcn with Shadcn Form](/integrations/shadcn-forms)
+- Checkout how to [integrate UploadShadcn with React-Hook-Forms](/integrations/react-hook-forms)
+
+### Thats it!
+
+You have successfully implemented UploadShad. 🎉
+However, it's recommended you checkout the resources below to make fully featured Form Input.
+
+#### More Resources
+
+- Learn more about [uploading Files to the Cloud (database/API).](/)
+- Learn more about [how file state management works](/file-state-management), useful for more custom integrations/use cases.
