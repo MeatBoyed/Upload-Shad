@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, createContext, useCallback } from "react";
-import { arrayMove } from "@dnd-kit/sortable";
+import React, { useState, useEffect, createContext } from "react";
 import { convertDeletedImages, convertUploadedImages, FileState } from "../Utils";
 
 const AWS_S3_BASE_URL = process.env.NEXT_PUBLIC_AWS_S3_BASE_URL;
@@ -32,18 +31,24 @@ export const UploadContextProvider: React.FC<{
   //   Init default values
   useEffect(() => {
     if (defaultImages) {
+      // Create FileStates from provided defaultImages
       const newFileStates: FileState[] = defaultImages.map((imageUrl) => ({
         key: Math.random().toString(5),
         file: imageUrl,
         progress: "COMPLETE",
       }));
+
+      // store in state & call handler
       setUploadedImages(newFileStates);
       handleChange(convertUploadedImages(newFileStates));
     }
   }, []);
 
+  /**
+   * Upload Files and stores it to State
+   */
   const handleUpload = async (files: File[]) => {
-    // Add and convert File to FileState
+    // Convert File to FileState
     const newFileStates: FileState[] = files.map((image) => ({
       file: image,
       progress: "PENDING", // Set to PENDING, as it hasn't been Uploaded to S3
@@ -56,12 +61,15 @@ export const UploadContextProvider: React.FC<{
     );
   };
 
+  /**
+   * Deletes File and updates state
+   * @param deletedFile - FileState
+   */
   const handleDelete = (deletedFile: FileState) => {
-    console.log("Deleting file: ", deletedFile);
     // Remove deleted file from state
     const images: FileState[] = uploadedImages?.filter((image) => image.key != deletedFile.key) || [];
 
-    // Ensure Image is already uploaded & Behave assuming Property is already created
+    // Ensure if Image is already uploaded & Behave assuming Form Object is already created
     if (
       deletedFile.progress === "COMPLETE" &&
       typeof deletedFile.file === "string" &&
@@ -75,7 +83,7 @@ export const UploadContextProvider: React.FC<{
       handleChange(convertUploadedImages(images), convertDeletedImages([...deletedImages, deletedFile])); // Enforces AWS S3 deletion is necessary
     }
 
-    // Ensure
+    // Ensure if Image is not uploaded, then simply update state
     if (deletedFile.progress === "PENDING" && deletedFile.file instanceof File) {
       setUploadedImages(images); // Set Image State;
       handleChange(convertUploadedImages(images)); // Enforces AWS S3 uploading is necessary
@@ -92,13 +100,10 @@ export const UploadContextProvider: React.FC<{
 
   // Check for a change in items order
   const handleDragEnd = function handleDragEnd(source: number, destination: number) {
-    const fileStateIds = uploadedImages?.map((file) => file.key) || [];
-    // const oldIndex = fileStateIds.indexOf(destination);
-    // const newIndex = fileStateIds.indexOf(source);
-
+    // Get new Images order
     const newImages = reorder(uploadedImages || [], source, destination);
-    // const newImages = arrayMove(uploadedImages || [], oldIndex, newIndex);
 
+    // Update state
     setUploadedImages(newImages);
     handleChange(convertUploadedImages(newImages));
   };
