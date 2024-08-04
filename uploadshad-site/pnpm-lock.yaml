@@ -123,6 +123,9 @@ importers:
         specifier: ^3.23.8
         version: 3.23.8
     devDependencies:
+      '@types/js-beautify':
+        specifier: ^1.14.3
+        version: 1.14.3
       '@types/node':
         specifier: ^20
         version: 20.14.13
@@ -1863,6 +1866,9 @@ packages:
 
   '@types/hoist-non-react-statics@3.3.5':
     resolution: {integrity: sha512-SbcrWzkKBw2cdwRTwQAswfpB9g9LJWfjtUeW/jvNwbhC8cpmmNYVePa+ncbUe0rGTQ7G3Ff6mYUN2VMfLVr+Sg==}
+
+  '@types/js-beautify@1.14.3':
+    resolution: {integrity: sha512-FMbQHz+qd9DoGvgLHxeqqVPaNRffpIu5ZjozwV8hf9JAGpIOzuAf4wGbRSo8LNITHqGjmmVjaMggTT5P4v4IHg==}
 
   '@types/json5@0.0.29':
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
@@ -6477,6 +6483,8 @@ snapshots:
     dependencies:
       '@types/react': 18.3.3
       hoist-non-react-statics: 3.3.2
+
+  '@types/js-beautify@1.14.3': {}
 
   '@types/json5@0.0.29': {}
 
