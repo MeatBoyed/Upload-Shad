@@ -2,17 +2,15 @@
 
 import docs__apiReferenceMdx from './docs__api-reference.mdx.json' assert { type: 'json' }
 import docs__charlesRossouwMdx from './docs__charles-rossouw.mdx.json' assert { type: 'json' }
-import docs__introductionMdx from './docs__introduction.mdx.json' assert { type: 'json' }
 import docs__keyboardInteractionsMdx from './docs__keyboard-interactions.mdx.json' assert { type: 'json' }
-import docs__stateManagementMdx from './docs__state-management.mdx.json' assert { type: 'json' }
-import docs__uploadingFilesToCloudMdx from './docs__uploading-files-to-cloud.mdx.json' assert { type: 'json' }
 import docs__variantsMdx from './docs__variants.mdx.json' assert { type: 'json' }
-import docs__advancedUsage__customImageLoaderMdx from './docs__advanced-usage__custom-image-loader.mdx.json' assert { type: 'json' }
-import docs__advancedUsage__customizingStylesMdx from './docs__advanced-usage__customizing-styles.mdx.json' assert { type: 'json' }
-import docs__advancedUsage__handlingErrorsMdx from './docs__advanced-usage__handling-errors.mdx.json' assert { type: 'json' }
-import docs__advancedUsage__uploadshadMdx from './docs__advanced-usage__uploadshad.mdx.json' assert { type: 'json' }
-import docs__integrations__reactHookFormMdx from './docs__integrations__react-hook-form.mdx.json' assert { type: 'json' }
-import docs__integrations__shadcnFormMdx from './docs__integrations__shadcn-form.mdx.json' assert { type: 'json' }
 import docs__uploadshad__installationMdx from './docs__uploadshad__installation.mdx.json' assert { type: 'json' }
+import docs__uploadshad__introductionMdx from './docs__uploadshad__introduction.mdx.json' assert { type: 'json' }
+import docs__uploadshad__uploadshadShadcnFormIntegrationMdx from './docs__uploadshad__uploadshad-shadcn-form-integration.mdx.json' assert { type: 'json' }
+import docs__uploadshad__advancedUsage__customizingStylesMdx from './docs__uploadshad__advanced-usage__customizing-styles.mdx.json' assert { type: 'json' }
+import docs__uploadshad__advancedUsage__errorHandlingMdx from './docs__uploadshad__advanced-usage__error-handling.mdx.json' assert { type: 'json' }
+import docs__uploadshad__advancedUsage__filesPreviewerMdx from './docs__uploadshad__advanced-usage__files-previewer.mdx.json' assert { type: 'json' }
+import docs__uploadshad__advancedUsage__uploadshadMdx from './docs__uploadshad__advanced-usage__uploadshad.mdx.json' assert { type: 'json' }
+import docs__uploadshad__advancedUsage__stateManagementMdx from './docs__uploadshad__advanced-usage__state-management.mdx.json' assert { type: 'json' }
 
-export const allDocs = [docs__apiReferenceMdx, docs__charlesRossouwMdx, docs__introductionMdx, docs__keyboardInteractionsMdx, docs__stateManagementMdx, docs__uploadingFilesToCloudMdx, docs__variantsMdx, docs__advancedUsage__customImageLoaderMdx, docs__advancedUsage__customizingStylesMdx, docs__advancedUsage__handlingErrorsMdx, docs__advancedUsage__uploadshadMdx, docs__integrations__reactHookFormMdx, docs__integrations__shadcnFormMdx, docs__uploadshad__installationMdx]
+export const allDocs = [docs__apiReferenceMdx, docs__charlesRossouwMdx, docs__keyboardInteractionsMdx, docs__variantsMdx, docs__uploadshad__installationMdx, docs__uploadshad__introductionMdx, docs__uploadshad__uploadshadShadcnFormIntegrationMdx, docs__uploadshad__advancedUsage__customizingStylesMdx, docs__uploadshad__advancedUsage__errorHandlingMdx, docs__uploadshad__advancedUsage__filesPreviewerMdx, docs__uploadshad__advancedUsage__uploadshadMdx, docs__uploadshad__advancedUsage__stateManagementMdx]

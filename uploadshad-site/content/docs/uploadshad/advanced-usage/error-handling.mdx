@@ -1,0 +1,102 @@
+---
+title: Error Handling for UploadShad
+description: Learn how to handle errors with UploadShad.
+---
+
+## Overview
+
+For majority of the errors, they are handled through **React-Hook-Form** (also with Shadcn Form), but there are a few you need to manage.
+Learn more about [Errors with React-Hook-Form](https://react-hook-form.com/faqs#Howtocreateanaccessibleinputerrorandmessage).
+
+## The Errors you should be aware of
+
+### Zod Schema errors
+
+Because ShadCN Forms use react-hook-form, and react-hook-form uses Schemas to define forms - for any custom error messages, you can place them using Zod's schema error handling.
+Learn more about [Zod Schemas](https://zod.dev/ERROR_HANDLING?id=error-handling-for-forms)
+
+#### Example implementation
+
+I've found this is all the error management needed in the schema for a "semi-complex" form.
+
+<br />
+
+```tsx
+export const MyFormSchema = z.object({
+  images: z
+    .array(z.string().url({ message: "Invalid Url" }))
+    // .min(1, { message: `There must be at least ${MINFILES} Image.` })
+    .max(MAXFILES, {
+      message: `$t('propertySchema.images.part1') ${MAXFILES} $t('propertySchema.images.part2')`,
+    }),
+});
+```
+
+<small>
+  **Note**: This does not handle if the user doesn't provide an image, and you expect there to be at
+  least 1 uploaded.
+</small>
+<br />
+
+### Catching Errors for User Feedback
+
+UploadShad does use toasts to provide any errors that can't be send through react-hook-form and zod.
+However, because of the accessibility and power of react-hook-form, simply adding a catch all error handler is the simplest
+approach to ensuring the user has feedback of any errors.
+
+<br />
+
+```tsx
+useEffect(() => {
+  if (isDirty && isSubmitted)
+    Object.entries(errors).forEach(([key, value]) => {
+      // Do something with the error
+      toast.error("Oops! Seems you've entered something wrong.", {
+        description: value.message,
+        duration: 10000,
+      });
+    });
+}, [errors, isDirty, isSubmitted]);
+```
+
+<small>
+  **Displays a toast for the Form Error. This implementation will display all Form value errors.**
+</small>
+
+### Creating (throwing) custom Errors
+
+In some cases you may need to implement custom validation for values after the user submits the form.
+For these situations, use the [**setError method**]() from react-hook-forms.
+
+This will safely interact with the form state and throw an error.
+
+<br />
+
+```tsx
+const {
+  setError,
+  setValue,
+  getValues,
+  formState: { isDirty, isSubmitted, errors },
+} = form;
+
+async function submitHandler(values: z.infer<typeof FormSchema>) {
+  // Add your condition
+  if (true) {
+    setError("images", {
+      message: `Whoops! This is an example error `,
+    });
+  }
+}
+```
+
+### Thats it!
+
+You have successfully implemented appropriate Error Handling for UploadShad 🎉
+
+<br />
+
+### Resources
+
+- Learn more about [Integrating with Shadcn Form](/uploadshad/uploadshad-shadcn-form-integration)
+- Learn more about [how file state management works](uploadshad/file-state-management), useful for more custom integrations/use cases.

@@ -11,22 +11,17 @@ export const docsConfig: DocsConfig = {
       items: [
         {
           title: "Overview",
-          href: "/introduction",
+          href: "/uploadshad/introduction",
           items: [],
         },
         {
           title: "Installation",
-          href: "/installation",
+          href: "/uploadshad/installation",
           items: [],
         },
         {
-          title: "State management",
-          href: "/state-management",
-          items: [],
-        },
-        {
-          title: "Uploading Files to the Cloud",
-          href: "/uploading-files-to-cloud",
+          title: "ShadCN Forms Integration",
+          href: "/uploadshad/uploadshad-shadcn-form-integration",
           items: [],
         },
       ],
@@ -36,51 +31,33 @@ export const docsConfig: DocsConfig = {
       items: [
         {
           title: "UploadShad",
-          href: "/advanced-usage/uploadshad",
+          href: "/uploadshad/advanced-usage/uploadshad",
           items: [],
         },
-        // {
-        //   title: "FileInput",
-        //   href: "/components/images-input",
-        //   items: [],
-        // },
-        // {
-        //   title: "UploadedFilesCard",
-        //   href: "/components/uploaded-files-card",
-        //   items: [],
-        // },
+
         {
-          title: "Custom Image Loader",
-          href: "/advanced-usage/custom-image-loader",
+          title: "Files Previewer",
+          href: "/uploadshad/advanced-usage/files-previewer",
+          items: [],
+        },
+        {
+          title: "State management",
+          href: "/uploadshad/advanced-usage/state-management",
           items: [],
         },
         {
           title: "Customizing Styles",
-          href: "/advanced-usage/customizing-styles",
+          href: "/uploadshad/advanced-usage/customizing-styles",
           items: [],
         },
         {
-          title: "Handling Errors",
-          href: "/advanced-usage/handling-errors",
+          title: "Error Handling",
+          href: "/uploadshad/advanced-usage/error-handling",
           items: [],
         },
       ],
     },
-    {
-      title: "Integrations",
-      items: [
-        {
-          title: "With Shadcn Form",
-          href: "/integrations/shadcn-form",
-          items: [],
-        },
-        {
-          title: "With React Hook Form",
-          href: "/integrations/react-hook-form",
-          items: [],
-        },
-      ],
-    },
+
     {
       title: "The Creator",
       items: [

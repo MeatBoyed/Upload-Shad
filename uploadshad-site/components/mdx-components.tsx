@@ -19,6 +19,7 @@ import {
 // import { ComponentPreview } from "./component-preview";
 // import { ReactHookFormDemo, ShadcnFormDemo } from "./form-demos";
 import { UploadShadPreview } from "./previews/uploadshad-preview";
+import { UploadShadFormPreview } from "./previews/uploadshad-form-preview";
 
 const components = {
   h1: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
@@ -192,6 +193,7 @@ const components = {
   // ShadcnFormDemo,
   // ReactHookFormDemo,
   UploadShadPreview,
+  UploadShadFormPreview,
 };
 
 interface MdxProps {

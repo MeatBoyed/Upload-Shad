@@ -1,0 +1,93 @@
+---
+title: File Previewer Explained
+description: Learn how the File-Preview component works, and how to customize it for your needs.
+---
+
+## Overview
+
+The File Previewer's responsibility is to
+
+- A. Allow user's to see & delete their uploaded files
+- B. Provide User-Friendly DnD support.
+
+#### Preventing unnecessary renders
+
+Previous iterations of UploadShad used the directly uploaded file (image) and attempted to render it and provide
+DnD support, but quickly became slow, buggy, and simply un-effective when 5+ images are being used - and that's on a "normal" computer.
+
+For this reason, I made the switch to uploading images, and rending the uploaded url for performance.
+Additionally the use of [**Memoization**](https://react.dev/reference/react/useMemo) is used to store the
+Image card components, and [**useRef**s](https://react.dev/reference/react/useRef) for Drag and Drop support.
+
+This is done to prevent the component(s) from unnecessarily re-rendering when external/indirect components above, and below
+the DOM tree re-render. This is further aided by the use of the [**Context**](https://react.dev/learn/scaling-up-with-reducer-and-context)
+library to access state/data that is needed by it's sibling components.
+
+#### Compound Component
+
+It should be noted that UploadShad is build using the [Compound Component design pattern](https://www.smashingmagazine.com/2021/08/compound-components-react/),
+which allows **you** the developer to decide if having a Previewer is necessary for your use case.
+
+If you need to make your own Previewer that works with UploadShad, simply replicate/copy the Files-Previewer and
+change the FilesPreview card.
+
+## Custom Loader
+
+UploadShad renders Images using the [Nextjs Image component](https://nextjs.org/docs/app/api-reference/components/image), which allows you to use a Custom Loader.
+There are many ways to configure the Nextjs Image Loader, so use what's best for you.
+
+Learn more about [Nextjs Image Loader](https://nextjs.org/docs/app/api-reference/components/image#loaderfile).
+
+### ImageCard Component
+
+The direct code showing how UploadShad displays image previews
+
+<br />
+
+```tsx
+<AspectRatio ratio={4 / 3}>
+  <Image
+    src={fileUrl}
+    alt={`image 1`}
+    fill
+    quality={35}
+    loader={customLoader}
+    className="rounded-md object-cover"
+  />
+</AspectRatio>
+```
+
+<br />
+
+### Implementing your own loader
+
+How to directly provide your Custom Image Loader to UploadShad.
+
+<br />
+
+```tsx
+import { YourCustomLoader } from "path-to-loader";
+
+<UploadShad {...uploadShadProps}>
+  <FileInput {...fileInputProps} />
+  <FilesPreview customLoader={YourCustomLoader}>
+    <FilesPreview.Head>
+      <h3 className="text-xl font-semibold">Uploaded files</h3>
+      <CardDescription>You have no images uploaded yet</CardDescription>
+    </FilesPreview.Head>
+  </FilesPreview>
+</UploadShad>;
+```
+
+<br />
+
+### Thats it!
+
+You now understand the high-level design, and implementation of the File-Preview Component. 🎉
+
+<br />
+
+### Resources
+
+- Learn more about [Integrating with Shadcn Form](/uploadshad/uploadshad-shadcn-form-integration)
+- Learn more about [how file state management works](/uploadshad/file-state-management), useful for more custom integrations/use cases.

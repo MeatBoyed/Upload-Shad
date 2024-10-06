@@ -17,9 +17,9 @@ UploadShad is a powerful and easy-to-use file uploader component designed for Sh
 
 <Steps>
 
-### Run the CLI
+### Run the ShadCN CLI
 
-Run the shadcn-ui init command and setup your project with Shadcn:
+Run the shadcn-ui init command and setup your project with Shadcn.
 
 <br />
 
@@ -29,7 +29,7 @@ pnpx shadcn@latest init
 
 ### Add UploadShad
 
-Install the dependant modules
+This will add UploadShad & install it's required dependencies into your project.
 
 <br />
 
@@ -37,7 +37,7 @@ Install the dependant modules
 pnpx shadcn@latest add https://uploadshad.nerfdesigns.com/registry/uploadshad.json
 ```
 
-<small>This uses the (new) ShadCN CLI to add UploadShad dependencies into your project</small>
+<small>This uses the (new) ShadCN CLI.</small>
 
 ### Environment Variable
 
@@ -56,19 +56,42 @@ AWS_BUCKET_PRODUCTION_FOLDER=<example folder>
 NEXT_PUBLIC_AWS_BASE_URL=<https://example.s3.region.amazonaws.com>
 ```
 
+### Enable Toasts in your project (optional)
+
+Notification Toasts are used to show feedback to the user for various states, and error messages.
+
+Add the Sonner Toaster to your highest/closest .layout file.
+
+<br />
+```
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html className="smooth-scroll" lang="en">
+      <body className={inter.className}>
+          {children}
+      </body>
+        <Toaster richColors position="top-center" />
+    </html>
+  );
+}
+```
+
 ### Thats it!
 
 You have successfully installed UploadShad into your project. 🎉
-Now you can [start using UploadShad in your Forms](/uploadshad/)!
+
+Now you can [start using UploadShad in your Forms](/uploadshad/).
+
+Alternatively, you can [learn how UploadShad works under the hood]("/uploadshad)
 
 </Steps>
 
-Learn more about [ShadCN CLI](https://ui.shadcn.com/docs/cli)
+<br />
 
-Learn more about [Integrating with Shadcn Form](/integrations/shadcn-form)
+### Resources
 
-Learn more about [Integrating with React Hook Form](/integrations/react-hook-form)
-
-Learn more about [uploading Files to the Cloud (database/API).](/)
-
-Learn more about [how file state management works](/file-state-management), useful for more custom integrations/use cases.
+- Learn more about [ShadCN CLI](https://ui.shadcn.com/docs/cli)
+- Learn more about [Integrating with Shadcn Form](/integrations/shadcn-form)
+- Learn more about [Integrating with React Hook Form](/integrations/react-hook-form)
+- Learn more about [uploading Files to the Cloud (database/API).](/)
+- Learn more about [how file state management works](/file-state-management), useful for more custom integrations/use cases.
