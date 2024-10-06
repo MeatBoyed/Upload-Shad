@@ -1,6 +1,4 @@
 import * as React from "react";
-import { useCallbackRef } from "./useCallbackRef";
-
 /**
  * @see https://github.com/radix-ui/primitives/blob/main/packages/react/use-controllable-state/src/useControllableState.tsx
  */
@@ -26,20 +24,18 @@ function useControllableState<T>({
   const value = isControlled ? prop : uncontrolledProp;
   const handleChange = useCallbackRef(onChange);
 
-  const setValue: React.Dispatch<React.SetStateAction<T | undefined>> =
-    React.useCallback(
-      (nextValue) => {
-        if (isControlled) {
-          const setter = nextValue as SetStateFn<T>;
-          const value =
-            typeof nextValue === "function" ? setter(prop) : nextValue;
-          if (value !== prop) handleChange(value as T);
-        } else {
-          setUncontrolledProp(nextValue);
-        }
-      },
-      [isControlled, prop, setUncontrolledProp, handleChange]
-    );
+  const setValue: React.Dispatch<React.SetStateAction<T | undefined>> = React.useCallback(
+    (nextValue) => {
+      if (isControlled) {
+        const setter = nextValue as SetStateFn<T>;
+        const value = typeof nextValue === "function" ? setter(prop) : nextValue;
+        if (value !== prop) handleChange(value as T);
+      } else {
+        setUncontrolledProp(nextValue);
+      }
+    },
+    [isControlled, prop, setUncontrolledProp, handleChange]
+  );
 
   return [value, setValue] as const;
 }
@@ -63,4 +59,22 @@ function useUncontrolledState<T>({
   return uncontrolledState;
 }
 
-export { useControllableState };
+/**
+ * @see https://github.com/radix-ui/primitives/blob/main/packages/react/use-callback-ref/src/useCallbackRef.tsx
+ */
+
+/**
+ * A custom hook that converts a callback to a ref to avoid triggering re-renders when passed as a
+ * prop or avoid re-executing effects when passed as a dependency
+ */
+function useCallbackRef<T extends (...args: never[]) => unknown>(callback: T | undefined): T {
+  const callbackRef = React.useRef(callback);
+
+  React.useEffect(() => {
+    callbackRef.current = callback;
+  });
+
+  // https://github.com/facebook/react/issues/19240
+  return React.useMemo(() => ((...args) => callbackRef.current?.(...args)) as T, []);
+}
+export { useControllableState, useCallbackRef };

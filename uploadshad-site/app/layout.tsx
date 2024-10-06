@@ -62,13 +62,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html className="smooth-scroll" lang="en">
       <body className={inter.className}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
           <SiteHeader />
           {children}
           <SiteFooter />
         </ThemeProvider>
-        <Toaster richColors={true} />
-        <ShadcnToaster />
+        <Toaster richColors position="top-center" />
+        {/* <ShadcnToaster /> */}
         {/* <Script async src={process.env.UMAMI_URL} data-website-id={process.env.UMAMI_DATA_WEBSITE_ID} /> */}
       </body>
     </html>

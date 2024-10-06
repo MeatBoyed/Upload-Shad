@@ -7,9 +7,18 @@ import { useMDXComponent } from "next-contentlayer/hooks";
 import { cn } from "@/lib/utils";
 import CodeBlock from "./code-block";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { ComponentPreview } from "./component-preview";
-import { ReactHookFormDemo, ShadcnFormDemo } from "./form-demos";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+// import { ComponentPreview } from "./component-preview";
+// import { ReactHookFormDemo, ShadcnFormDemo } from "./form-demos";
+import { UploadShadPreview } from "./previews/uploadshad-preview";
 
 const components = {
   h1: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
@@ -17,21 +26,42 @@ const components = {
   ),
   h2: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h2
-      className={cn("font-heading mt-12 scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight first:mt-0", className)}
+      className={cn(
+        "font-heading mt-12 scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight first:mt-0",
+        className
+      )}
       {...props}
     />
   ),
   h3: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h3 className={cn("font-heading mt-8 scroll-m-20 text-xl font-semibold tracking-tight", className)} {...props} />
+    <h3
+      className={cn(
+        "font-heading mt-8 scroll-m-20 text-xl font-semibold tracking-tight",
+        className
+      )}
+      {...props}
+    />
   ),
   h4: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h4 className={cn("font-heading mt-8 scroll-m-20 text-lg font-semibold tracking-tight", className)} {...props} />
+    <h4
+      className={cn(
+        "font-heading mt-8 scroll-m-20 text-lg font-semibold tracking-tight",
+        className
+      )}
+      {...props}
+    />
   ),
   h5: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h5 className={cn("mt-8 scroll-m-20 text-lg font-semibold tracking-tight", className)} {...props} />
+    <h5
+      className={cn("mt-8 scroll-m-20 text-lg font-semibold tracking-tight", className)}
+      {...props}
+    />
   ),
   h6: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h6 className={cn("mt-8 scroll-m-20 text-base font-semibold tracking-tight", className)} {...props} />
+    <h6
+      className={cn("mt-8 scroll-m-20 text-base font-semibold tracking-tight", className)}
+      {...props}
+    />
   ),
   a: ({ className, ...props }: React.HTMLAttributes<HTMLAnchorElement>) => (
     <a className={cn("font-medium underline underline-offset-4", className)} {...props} />
@@ -48,7 +78,9 @@ const components = {
   ol: ({ className, ...props }: React.HTMLAttributes<HTMLOListElement>) => (
     <ol className={cn("my-6 ml-6 list-decimal", className)} {...props} />
   ),
-  li: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => <li className={cn("mt-2", className)} {...props} />,
+  li: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
+    <li className={cn("mt-2", className)} {...props} />
+  ),
   blockquote: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
     <blockquote className={cn("mt-6 border-l-2 pl-6 italic", className)} {...props} />
   ),
@@ -56,7 +88,9 @@ const components = {
     // eslint-disable-next-line @next/next/no-img-element
     <img className={cn("rounded-md", className)} alt={alt} {...props} />
   ),
-  hr: ({ ...props }: React.HTMLAttributes<HTMLHRElement>) => <hr className="my-4 md:my-8" {...props} />,
+  hr: ({ ...props }: React.HTMLAttributes<HTMLHRElement>) => (
+    <hr className="my-4 md:my-8" {...props} />
+  ),
   Table: ({ className, ...props }: React.ComponentProps<typeof Table>) => (
     <div className="rounded-md border">
       <Table className={cn("w-full min-h-[300px]", className)} {...props} />
@@ -85,16 +119,29 @@ const components = {
   ),
   TableCell: ({ className, ...props }: React.ComponentProps<typeof TableCell>) => (
     <TableCell
-      className={cn("border-b px-4 py-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right", className)}
+      className={cn(
+        "border-b px-4 py-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right",
+        className
+      )}
       {...props}
     />
   ),
-  code: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => <CodeBlock value={props.children as string} />,
+  code: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
+    <CodeBlock value={props.children as string} />
+  ),
   Image,
   Step: ({ className, ...props }: React.ComponentProps<"h3">) => (
-    <h3 className={cn("font-heading mt-8 scroll-m-20 text-xl font-semibold tracking-tight", className)} {...props} />
+    <h3
+      className={cn(
+        "font-heading mt-8 scroll-m-20 text-xl font-semibold tracking-tight",
+        className
+      )}
+      {...props}
+    />
   ),
-  Steps: ({ ...props }) => <div className="[&>h3]:step steps mb-12 ml-4 border-l pl-8 [counter-reset:step]" {...props} />,
+  Steps: ({ ...props }) => (
+    <div className="[&>h3]:step steps mb-12 ml-4 border-l pl-8 [counter-reset:step]" {...props} />
+  ),
   Link: ({ className, ...props }: React.ComponentProps<typeof Link>) => (
     <Link className={cn("font-medium underline underline-offset-4", className)} {...props} />
   ),
@@ -111,7 +158,10 @@ const components = {
     <Tabs className={cn("relative mt-6 w-full", className)} {...props} />
   ),
   TabsList: ({ className, ...props }: React.ComponentProps<typeof TabsList>) => (
-    <TabsList className={cn("w-full justify-start rounded-none border-b bg-transparent p-0", className)} {...props} />
+    <TabsList
+      className={cn("w-full justify-start rounded-none border-b bg-transparent p-0", className)}
+      {...props}
+    />
   ),
   TabsTrigger: ({ className, ...props }: React.ComponentProps<typeof TabsTrigger>) => (
     <TabsTrigger
@@ -124,16 +174,24 @@ const components = {
   ),
   TabsContent: ({ className, ...props }: React.ComponentProps<typeof TabsContent>) => (
     <TabsContent
-      className={cn("relative [&_h3.font-heading]:text-base [&_h3.font-heading]:font-semibold", className)}
+      className={cn(
+        "relative [&_h3.font-heading]:text-base [&_h3.font-heading]:font-semibold",
+        className
+      )}
       {...props}
     />
   ),
-  CodeBlock: ({ className, value, ...props }: React.HTMLAttributes<HTMLElement> & { value: string }) => (
+  CodeBlock: ({
+    className,
+    value,
+    ...props
+  }: React.HTMLAttributes<HTMLElement> & { value: string }) => (
     <CodeBlock value={value} {...props} />
   ),
-  ComponentPreview,
-  ShadcnFormDemo,
-  ReactHookFormDemo,
+  // ComponentPreview,
+  // ShadcnFormDemo,
+  // ReactHookFormDemo,
+  UploadShadPreview,
 };
 
 interface MdxProps {

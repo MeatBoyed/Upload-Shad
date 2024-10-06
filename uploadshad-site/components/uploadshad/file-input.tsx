@@ -7,7 +7,7 @@ import { UploadIcon, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Image, { ImageLoaderProps } from "next/image";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { formatBytes } from "@/registry/component/uploadshad/utils";
+import { formatBytes } from "@/components/uploadshad/utils";
 import Dropzone, { type DropzoneProps, type FileRejection } from "react-dropzone";
 import { handleRejectedFiles, useFilesContext, useControllableState } from "./hooks";
 

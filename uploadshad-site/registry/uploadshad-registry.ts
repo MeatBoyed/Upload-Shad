@@ -1,6 +1,6 @@
 import { Registry } from "./schema";
 
-export const blocks: Registry = [
+export const uploadshadRegistry: Registry = [
   // {
   //   name: "uploadshad",
   //   type: "registry:block",
@@ -57,11 +57,12 @@ export const blocks: Registry = [
       "component/uploadshad/emptycard.tsx",
       "component/uploadshad/file-input.tsx",
       "component/uploadshad/actions.ts",
+      "component/uploadshad/index.ts",
     ],
   },
 ];
 
-export const accessories: Registry = [
+export const uploadShadAccessories: Registry = [
   {
     name: "uploadshad-hooks",
     type: "registry:hook",

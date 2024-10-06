@@ -3,36 +3,48 @@
 import React, { useState, useMemo, useCallback } from "react";
 import { cn, formatJavaScriptCode, uuid } from "@/lib/utils";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { TagInput, TagInputProps, Tag } from "emblor";
-import CodeBlock from "./code-block";
-import { UploadShad, UploadShadProps } from "@/components/uploadshad/main";
-// import { } from "@/registry/component/uploadshad/"
+import CodeBlock from "../code-block";
+import { CardDescription } from "../ui/card";
+import {
+  FileInputProps,
+  FileInput,
+  FilesPreview,
+  UploadShad,
+  UploadShadProps,
+} from "@/components/uploadshad";
 
 // TODO: Update preivews from Doc code
 // TODO: Fix Copy button not worki
 
-interface ComponentPreviewProps
-  extends Omit<TagInputProps, "tags" | "setTags" | "activeTagIndex" | "setActiveTagIndex"> {
+interface ComponentPreviewProps extends UploadShadProps {
   propName?: string;
   selectOptions?: Array<string>;
 }
 
-export function ComponentPreview({
+export function UploadShadPreview({
   className,
   selectOptions,
   propName,
   ...otherProps
 }: ComponentPreviewProps) {
-  const defaultProps: UploadShadProps & {
+  const uploadShadProps: UploadShadProps & {
     [key: string]: any;
   } = useMemo(() => {
-    const props: UploadShadProps = {
-      handleChange: (uploadedImages, deletedImages) => {},
-      maxFiles: 4,
-      maxSize: 5 * 1024 * 1024,
+    return {
+      className: "w-full",
+      folderId: "uploadshad-site",
+      handleChange: (files) => {
+        console.log("Uploaded Files: ", files);
+      },
     };
-
-    return props;
+  }, []);
+  const fileInputProps: FileInputProps & {
+    [key: string]: any;
+  } = useMemo(() => {
+    return {
+      maxfiles: 10,
+      maxsize: 5 * 1024 * 1024,
+    };
   }, []);
 
   const props: Partial<UploadShadProps> & {
@@ -76,23 +88,26 @@ export function ComponentPreview({
 
     const rawCodeString = `
         import React, { useState } from 'react';
-        import { UploadShad, UploadShadProps } from "./uploadshad/main";
+        import { UploadShad, UploadShadProps } from "@/components/uploadshad";
 
           const Example = () => {
 
               return (
-                  <UploadShad
-                    maxFiles={4}
-                    maxSize{5 * 1024 * 1024}
-                    customLoader={customerLoader}
-                    defaultValues={initVehicle ? field.value : []}
-                    handleChange: (uploadedImages, deletedImages) => {
-                      // if (deletedImages) setValue("deletedImages", deletedImages); // Store deleted Images (only for existing form values)
-                      // setValue("imagesOrder", uploadedImages.order); // Store File Order (only for existing form values)
-                      // setValue("images", uploadedImages.newImages); // Stores Uploaded Files (Images)
-                    }
-                    ${propEntries}
-                  />
+                   <UploadShad 
+                      folderId="your-folder-name"
+                      handleChange={(files) => {
+                        console.log("Uploaded Files: ", files);
+                      }}
+                      className="w-full"
+                   >
+                      <FileInput maxfiles={10} maxsize={5 * 1024 * 1024} />
+                      <FilesPreview>
+                        <FilesPreview.Head>
+                          <h3 className="text-xl font-semibold">Uploaded files</h3>
+                          <CardDescription>You have no images uploaded yet</CardDescription>
+                        </FilesPreview.Head>
+                      </FilesPreview>
+                    </UploadShad>
               );
           };
           `;
@@ -121,7 +136,15 @@ export function ComponentPreview({
           </TabsList>
         </div>
         <TabsContent value="preview" className="relative rounded-md border p-5">
-          <UploadShad {...defaultProps} {...props} />
+          <UploadShad {...uploadShadProps}>
+            <FileInput {...fileInputProps} />
+            <FilesPreview>
+              <FilesPreview.Head>
+                <h3 className="text-xl font-semibold">Uploaded files</h3>
+                <CardDescription>You have no images uploaded yet</CardDescription>
+              </FilesPreview.Head>
+            </FilesPreview>
+          </UploadShad>
         </TabsContent>
         <TabsContent value="code">
           <div className="flex flex-col space-y-4">

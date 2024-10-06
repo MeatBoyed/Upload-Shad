@@ -1,3 +1,3 @@
-import { accessories, blocks } from "./registry-blocks";
+import { uploadShadAccessories, uploadshadRegistry } from "./uploadshad-registry";
 
-export const registryComponents = [...blocks, ...accessories];
+export const registryComponents = [...uploadShadAccessories, ...uploadshadRegistry];

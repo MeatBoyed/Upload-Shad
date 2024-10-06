@@ -7,7 +7,7 @@ import {
   formatBytes,
   getClientVariables,
   FilePayload,
-} from "@/registry/component/uploadshad/utils";
+} from "@/components/uploadshad/utils";
 
 const { NEXT_PUBLIC_HOST_URL } = getClientVariables();
 

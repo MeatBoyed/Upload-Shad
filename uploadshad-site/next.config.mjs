@@ -13,6 +13,15 @@ const nextConfig = {
       },
     ];
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "dstilezauto.s3.af-south-1.amazonaws.com",
+        port: "",
+      },
+    ],
+  },
 };
 
 // module.exports = withContentlayer(nextConfig);
