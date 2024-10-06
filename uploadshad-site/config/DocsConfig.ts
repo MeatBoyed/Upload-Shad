@@ -11,17 +11,17 @@ export const docsConfig: DocsConfig = {
       items: [
         {
           title: "Overview",
-          href: "/uploadshad/introduction",
+          href: "/introduction",
           items: [],
         },
         {
           title: "Installation",
-          href: "/uploadshad/installation",
+          href: "/installation",
           items: [],
         },
         {
           title: "ShadCN Forms Integration",
-          href: "/uploadshad/uploadshad-shadcn-form-integration",
+          href: "/uploadshad-shadcn-form-integration",
           items: [],
         },
       ],

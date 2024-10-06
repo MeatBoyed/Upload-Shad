@@ -8,7 +8,7 @@ const nextConfig = {
     return [
       {
         source: "/",
-        destination: "uploadshad/introduction",
+        destination: "introduction",
         permanent: true,
       },
     ];
