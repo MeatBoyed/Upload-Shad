@@ -24,56 +24,45 @@ Run the shadcn-ui init command and setup your project with Shadcn:
 <br />
 
 ```bash
-pnpx shadcn-ui@latest init
+pnpx shadcn@latest init
 ```
 
-Install the **Form** and dependant Shadcn components by running the following command:
-
-<br />
-
-```bash
-pnpm dlx shadcn-ui@latest add form progress aspect-ratio card
-```
-
-### Installation
+### Add UploadShad
 
 Install the dependant modules
 
 <br />
 
 ```bash
-pnpm add @hello-pangea/dnd sonner react-dropzone sharp uuid @aws-sdk/client-s3
+pnpx shadcn@latest add https://uploadshad.nerfdesigns.com/registry/uploadshad.json
 ```
 
-<small>AWS SDK is optional, remove HonoS3 if you don't wish to use it</small>
+<small>This uses the (new) ShadCN CLI to add UploadShad dependencies into your project</small>
 
 ### Environment Variable
 
-For UploadShad to be more user-friendly, it does expect a **AWS_S3_BASE_URL** environment to build urls for image previewing.
-You can provide a non S3 base url, that matches your storage solution choice.
+For UploadShad to upload & delete images in your S3 Bucket, add these AWS configuration Environment Variables to your .env file.
+UploadShad ensures that variables without the "NEXT_PUBLIC" prefix remain secured on the server, and are not exposed to the client.
 
 <br />
 
 ```
-AWS_S3_BASE_URL=<your_storage_solutions_base_url>
+NEXT_PUBLIC_HOST_URL=<http://localhost:3000 ensure you update this in production>
+AWS_BUCKET_NAME=<bucket name>
+AWS_BUCKET_REGION=<bucket region>
+AWS_BUCKET_ACCESS_KEY=<your access key>
+AWS_BUCKET_SECRET_ACCESS_KEY=<your secret key>
+AWS_BUCKET_PRODUCTION_FOLDER=<example folder>
+NEXT_PUBLIC_AWS_BASE_URL=<https://example.s3.region.amazonaws.com>
 ```
-
-### Install UploadShad
-
-Install **UploadShad** by running the following command:
-(Coming soon)
-
-<br />
-
-```bash
-pnpm install uploadshad
-```
-
-<small>Or, use any package manager of your choice.</small>
 
 ### Thats it!
 
 You have successfully installed UploadShad into your project. 🎉
+
+</Steps>
+
+Learn more about [ShadCN CLI](https://ui.shadcn.com/docs/cli)
 
 Learn more about [Integrating with Shadcn Form](/integrations/shadcn-form)
 
@@ -82,5 +71,3 @@ Learn more about [Integrating with React Hook Form](/integrations/react-hook-for
 Learn more about [uploading Files to the Cloud (database/API).](/)
 
 Learn more about [how file state management works](/file-state-management), useful for more custom integrations/use cases.
-
-</Steps>

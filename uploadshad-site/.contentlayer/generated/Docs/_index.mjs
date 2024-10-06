@@ -2,7 +2,6 @@
 
 import docs__apiReferenceMdx from './docs__api-reference.mdx.json' assert { type: 'json' }
 import docs__charlesRossouwMdx from './docs__charles-rossouw.mdx.json' assert { type: 'json' }
-import docs__installationMdx from './docs__installation.mdx.json' assert { type: 'json' }
 import docs__introductionMdx from './docs__introduction.mdx.json' assert { type: 'json' }
 import docs__keyboardInteractionsMdx from './docs__keyboard-interactions.mdx.json' assert { type: 'json' }
 import docs__stateManagementMdx from './docs__state-management.mdx.json' assert { type: 'json' }
@@ -14,5 +13,6 @@ import docs__advancedUsage__handlingErrorsMdx from './docs__advanced-usage__hand
 import docs__advancedUsage__uploadshadMdx from './docs__advanced-usage__uploadshad.mdx.json' assert { type: 'json' }
 import docs__integrations__reactHookFormMdx from './docs__integrations__react-hook-form.mdx.json' assert { type: 'json' }
 import docs__integrations__shadcnFormMdx from './docs__integrations__shadcn-form.mdx.json' assert { type: 'json' }
+import docs__uploadshad__installationMdx from './docs__uploadshad__installation.mdx.json' assert { type: 'json' }
 
-export const allDocs = [docs__apiReferenceMdx, docs__charlesRossouwMdx, docs__installationMdx, docs__introductionMdx, docs__keyboardInteractionsMdx, docs__stateManagementMdx, docs__uploadingFilesToCloudMdx, docs__variantsMdx, docs__advancedUsage__customImageLoaderMdx, docs__advancedUsage__customizingStylesMdx, docs__advancedUsage__handlingErrorsMdx, docs__advancedUsage__uploadshadMdx, docs__integrations__reactHookFormMdx, docs__integrations__shadcnFormMdx]
+export const allDocs = [docs__apiReferenceMdx, docs__charlesRossouwMdx, docs__introductionMdx, docs__keyboardInteractionsMdx, docs__stateManagementMdx, docs__uploadingFilesToCloudMdx, docs__variantsMdx, docs__advancedUsage__customImageLoaderMdx, docs__advancedUsage__customizingStylesMdx, docs__advancedUsage__handlingErrorsMdx, docs__advancedUsage__uploadshadMdx, docs__integrations__reactHookFormMdx, docs__integrations__shadcnFormMdx, docs__uploadshad__installationMdx]

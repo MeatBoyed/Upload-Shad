@@ -5,17 +5,24 @@ import { cn, formatJavaScriptCode, uuid } from "@/lib/utils";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TagInput, TagInputProps, Tag } from "emblor";
 import CodeBlock from "./code-block";
-import { UploadShad, UploadShadProps } from "./uploadshad/main";
+import { UploadShad, UploadShadProps } from "@/components/uploadshad/main";
+// import { } from "@/registry/component/uploadshad/"
 
 // TODO: Update preivews from Doc code
 // TODO: Fix Copy button not worki
 
-interface ComponentPreviewProps extends Omit<TagInputProps, "tags" | "setTags" | "activeTagIndex" | "setActiveTagIndex"> {
+interface ComponentPreviewProps
+  extends Omit<TagInputProps, "tags" | "setTags" | "activeTagIndex" | "setActiveTagIndex"> {
   propName?: string;
   selectOptions?: Array<string>;
 }
 
-export function ComponentPreview({ className, selectOptions, propName, ...otherProps }: ComponentPreviewProps) {
+export function ComponentPreview({
+  className,
+  selectOptions,
+  propName,
+  ...otherProps
+}: ComponentPreviewProps) {
   const defaultProps: UploadShadProps & {
     [key: string]: any;
   } = useMemo(() => {
