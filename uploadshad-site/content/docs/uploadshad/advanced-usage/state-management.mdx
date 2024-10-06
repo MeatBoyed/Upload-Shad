@@ -5,107 +5,69 @@ description: Learn how State Management works in UploadShad to integrate more sm
 
 ## Overview
 
-Uploaded files and their respective states are stored within the **UploadContext** which is shared between the **FileUploader** (The Dropzone) and the **UploadedFiles** (File preview, and drag n drop sorting) components.
+Uploaded files and their respective states are stored within the **FilesContext** which is consumed
+by the **File-Input** (The Dropzone) and the **Files-Preview** (Image previewer and DnD) components.
+
+The FilesContext and useFilesContext hook allow consumers to access images in state, and handler methods to change the state -
+allowing me to apply separation of concerns while developing.
 
 Learn more about [useContext in Nextjs and React](https://vercel.com/guides/react-context-state-management-nextjs).
 
 ##### UploadContext Responsibilities
 
-- Stores the Uploaded Files
-- Stores the specific order of Files (uploaded files & upload urls)
-- Stores the Deleted Files
+- Stores the Uploaded Files, and their order
+- Provide functions for manipulating state (handleDelete, handleInput, handleDragEnd)
+- Prevent unnecessary re-renders in children components when users interact on the page
+
+## Memoization
+
+It should be noted that, almost, every client side method in UploadShad and FilesContext uses **[the useCallback hook](https://react.dev/reference/react/useCallback)**
+to cache functions between re-renders.
+
+This "small" implementation, **improved UploadShad's performance by 90%** 🤯
 
 ## Accessing the provided States
 
-UploadedContext will always invoke the Callback function passed into the UploadShad **handleChange** prop.
+UploadedContext will always invoke the Callback function prop passed into the UploadShad **handleChange**, and provide
+the urls of uploaded files, and their order.
 
-### HandleChange
+### FilesContext Props
 
 <br />
 Type
 ```tsx
-handleChange: (uploadedImages: { newImages: File[]; order: string[] }, 
-  deletedImages?: string[], newImages?: File[]) => void
+folderId?: string;
+defaultValues?: string[];
+children: React.ReactNode;
+onChange?: (files: string[]) => void;
+metadata?: Record<string, string> | undefined;
 ````
+This is allows for updating the Form state (or any state) with the new values.
+
+If you need to extend UploadShad's features to match your use case, simply create a new component and use the **useFilesContext** hook
+to access UploadShad's state data.
+
+### FilesContext Handlers
 
 <br />
-Example{" "}
-
-```tsx handleChange={(uploadedImages, deletedImages) => {
-  if (deletedImages) setValue("deletedImages", deletedImages); // Store deleted Files
-  setValue("imagesOrder", uploadedImages.order); // Store File Order
-  setValue("images", uploadedImages.newImages); // Stores Uploaded Files
-}}
-
+Type
+```tsx
+files: string[];
+handleDelete: (deletedFile: string) => Promise<boolean>;
+handleInput: (files: File[]) => Promise<void>;
+handleReOrder: (source: number, destination: number) => void;
 ```
 
-<br />
+These methods provide the functionality to manipulating state, and execute commands to S3 via the api endpoint "/api/uploadshad".
 
-If you have default values (currently only supports Image Urls), its recommended that you manage the incoming state in **handleChange** by only tracking deleted files only if the default values are present.
+### AWS S3 configuration
 
-Checkout the Difference between newImages and order below.
+It should be noted that any accepted files (files that have been uploaded via the PreSign url), will persist in your storage bucket
+if the user A. Doesn't submit the form or delete the uploaded file, or B. The user refreshes the page.
 
-<br />
-```tsx{" "}
+Obviously, this can lead to issues depending our use case, and its why I recommend adding metadata values to your images to track
+temporary files, and submitted files (urls are saved in a database). This will allow you to create/use tools to automatically
+remove temporary files after a certain period of time.
 
-handleChange={(uploadedImages, deletedImages) => {
-if (defaultValue) {
-if (deletedImages) setValue("deletedImages", deletedImages); // Store deleted Files
-setValue("imagesOrder", uploadedImages.order); // Store File Order
-}
-setValue("images", uploadedImages.newImages); // Stores Uploaded Files
-}}
-
-````
-
-## Difference between newImages & order
-
-**newImages** (files) are as implied, the newly uploaded local files that are ready for uploading to the cloud.
-The **Order** is the complete merged list of local and pre-uploaded files (currently only supports image urls), that can be used to retain and manage state within your database.
-
-More specifically - Order is simply a direct mapper list for detecting the specific order uploaded files (image urls) and local files (sourced from the user's input) to the **images** array.
-This allows you to only upload the local files, and still keep your list of urls (or files) in order after they've been uploaded.
-
-#### Breakdown
-
-- **newImages**: newly uploaded local files.
-- **order**: complete merged list of local and pre-uploaded files
-
-### Example
-
-This is how I'm using the **newImages** and **order** values to keep my S3 Bucket and Database in sync with the uploaded files.
-
-<br />
-Type
-```tsx
-import { PostImageError, PostImagesResponse, UploadedImages } from "@/components/UploadShad/server/honoS3Types";
-async function manageImages(
-  stockId: number,
-  newImages: any[],
-  order: string[],
-  BASE_URL: string
-): Promise<{ images: UploadedImages[]; error: string }> {
-  let newImages: UploadedImages[] = []; // List of image urls to simply store in database
-  let uploadRes: PostImagesResponse; // Use your implementation of expected response with an error
-
-// Skip uploading and formatting if there are no new images
-if (newImages.length > 0) {
-uploadRes = await PostImagesToS3(stockId.toString(), stockId.toString(), newImages); // Your implementation of file uploading
-if (uploadRes.error != PostImageError.NoError) return { images: [], error: uploadRes.error.toString() }; // Your implementation of error handling
-}
-
-// Ensure Uploaded & existing images are in the correct order - By matching Names and URLs
-order.forEach((imageId) => {
-// Push straight if it's a URL
-if (imageId.startsWith(BASE_URL)) return newImages.push({ fileName: imageId, url: imageId });
-
-    // Find uploaded image that matches fileName
-    uploadRes.images.forEach((image) => image.fileName === imageId && newImages.push(image));
-
-});
-
-return { images: newImages, error: "" };
-}
-````
-
-This extracts the complication of determining where to place the newly uploaded local files, in relation to what the database is currently storing (passed to the defaultValue when component is rendered), so you can focus on simply implementing uploading the file to the cloud.
+To implement this, use the metadata prop provided by UploadShad to set any uploaded files as temporary ones. Then ensure before/after
+saving the urls, that you execute the appropriate command to update the file's (object) metadata to represent a "accepted" state in S3 Storage.
