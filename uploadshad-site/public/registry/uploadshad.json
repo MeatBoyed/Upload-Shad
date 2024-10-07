@@ -36,10 +36,10 @@
       "target": "components/uploadshad/files-preview.tsx"
     },
     {
-      "path": "component/uploadshad/emptycard.tsx",
+      "path": "component/uploadshad/empty-card.tsx",
       "content": "import { ImageIcon } from \"@radix-ui/react-icons\";\r\n\r\nimport { Card, CardDescription, CardTitle } from \"@/components/ui/card\";\r\nimport { cn } from \"@/lib/utils\";\r\n\r\ninterface EmptyCardProps extends React.ComponentPropsWithoutRef<typeof Card> {\r\n  title: string;\r\n  description?: string;\r\n  action?: React.ReactNode;\r\n  icon?: React.ComponentType<{ className?: string }>;\r\n}\r\n\r\nexport function EmptyCard({\r\n  title,\r\n  description,\r\n  icon: Icon = ImageIcon,\r\n  action,\r\n  className,\r\n  ...props\r\n}: EmptyCardProps) {\r\n  return (\r\n    <Card\r\n      className={cn(\r\n        \"flex w-full flex-col items-center justify-center space-y-6 bg-transparent p-16\",\r\n        className\r\n      )}\r\n      {...props}\r\n    >\r\n      <div className=\"mr-4 shrink-0 rounded-full border border-dashed p-4\">\r\n        <Icon className=\"size-8 text-muted-foreground\" aria-hidden=\"true\" />\r\n      </div>\r\n      <div className=\"flex flex-col items-center gap-1.5 text-center\">\r\n        <CardTitle>{title}</CardTitle>\r\n        {description ? <CardDescription>{description}</CardDescription> : null}\r\n      </div>\r\n      {action ? action : null}\r\n    </Card>\r\n  );\r\n}\r\n",
       "type": "registry:component",
-      "target": "components/uploadshad/emptycard.tsx"
+      "target": "components/uploadshad/empty-card.tsx"
     },
     {
       "path": "component/uploadshad/file-input.tsx",

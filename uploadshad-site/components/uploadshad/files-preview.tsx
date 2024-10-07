@@ -1,6 +1,6 @@
 import { CardContent } from "@/components/ui/card";
 import { PropsWithChildren, useMemo } from "react";
-import { EmptyCard } from "@/components/uploadshad/emptycard";
+import { EmptyCard } from "@/components/uploadshad/empty-card";
 import Image, { ImageLoaderProps } from "next/image";
 import { Trash2 } from "lucide-react";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
@@ -130,7 +130,7 @@ function FilesPreviewPreviewCard({
           style={{ background: "white" }}
           className="flex h-8 w-8 shadow-lg cursor-pointer items-center justify-center rounded-full border hover:text-red-500 bg-white bg-opacity-70 "
         >
-          <Trash2 size={18} className="hover:text-red-500" />
+          <Trash2 size={18} className=" text-black hover:text-red-500" />
         </div>
       </div>
     </div>

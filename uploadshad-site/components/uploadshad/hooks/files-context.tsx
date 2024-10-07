@@ -56,8 +56,6 @@ export const FilesContextProvider: React.FC<{
 
         // Update File State
         return fileUploadResponse.url.split("?")[0];
-        if (fileUploadResponse.url) {
-        }
       })
     ).then((urls) => urls.filter((url) => url != ""));
 
