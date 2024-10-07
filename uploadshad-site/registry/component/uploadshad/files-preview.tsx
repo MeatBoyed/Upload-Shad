@@ -1,6 +1,6 @@
 import { CardContent } from "@/components/ui/card";
 import { PropsWithChildren, useMemo } from "react";
-import { EmptyCard } from "@/registry/component/uploadshad/emptycard";
+import { EmptyCard } from "@/registry/component/uploadshad/empty-card";
 import Image, { ImageLoaderProps } from "next/image";
 import { Trash2 } from "lucide-react";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
