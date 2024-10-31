@@ -98,7 +98,7 @@ export function Form() {
               <FormLabel className="text-left">Images</FormLabel>
               <FormControl className="w-full">
                 <UploadShad
-                  handleChange={() => {
+                  handleChange={(files) => {
                     setValue("images", files); // store files to Form State
                   }}
                 >
