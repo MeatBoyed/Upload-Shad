@@ -1,5 +1,6 @@
 import { siteConfig } from "@/config/SiteConfig";
-import BrandingFooter from "@/registry/component/NDX/branding-footer";
+import BrandingFooter from "./ndx/branding-footer";
+// import BrandingFooter from "@/registry/component/ndx/branding-footer";
 
 export function SiteFooter() {
   return (
@@ -27,8 +28,9 @@ export function SiteFooter() {
           .
         </p>
         <div className="w-full border" />
-        <BrandingFooter />
+        {/* <BrandingFooter /> */}
       </div>
+      <BrandingFooter />
     </footer>
   );
 }

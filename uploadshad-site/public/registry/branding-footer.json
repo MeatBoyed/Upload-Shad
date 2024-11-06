@@ -1,0 +1,12 @@
+{
+  "name": "branding-footer",
+  "type": "registry:component",
+  "files": [
+    {
+      "path": "component/ndx/branding-footer.tsx",
+      "content": "export default function BrandingFooter() {\r\n  return (\r\n    <div className=\"w-full  min-h-fit flex justify-center items-center flex-col gap-5\">\r\n      <div className=\"flex justify-center items-center flex-col\">\r\n        <h3 className=\"scroll-m-20 text-2xl font-semibold tracking-tight\">Powered by</h3>\r\n        <h2 className=\"scroll-m-20 pb-2 text-3xl font-semibold tracking-tight text-[#00AAFF] \">\r\n          Nerf Designs\r\n        </h2>\r\n        <div className=\"leading-7\">Nerf your competition</div>\r\n      </div>\r\n\r\n      <p className=\"leading-7 text-center\">\r\n        Copyright © {new Date().getFullYear()} Nerf Designs. All Rights Reserved\r\n      </p>\r\n    </div>\r\n  );\r\n}\r\n",
+      "type": "registry:component",
+      "target": "components/ndx/branding-footer.tsx"
+    }
+  ]
+}

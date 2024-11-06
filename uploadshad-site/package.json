@@ -12,6 +12,7 @@
     "registry:clean": "pnpm dlx tsx scripts/clean-registry.ts",
     "build:registry": "pnpm run registry:build && pnpm run registry:clean",
     "add-uploadshad": "pnpm dlx shadcn@latest add http://localhost:3000/registry/uploadshad.json",
+    "add-branding-footer": "pnpm dlx shadcn@latest add http://localhost:3000/registry/branding-footer.json",
     "build:add-uploadshad": "pnpm run build:registry && pnpm run add-uploadshad"
   },
   "dependencies": {
