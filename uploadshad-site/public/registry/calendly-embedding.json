@@ -1,0 +1,12 @@
+{
+  "name": "calendly-embedding",
+  "type": "registry:component",
+  "files": [
+    {
+      "path": "component/ndx/calendly-embedding.tsx",
+      "content": "\"use client\";\r\n\r\nimport React, { useEffect } from \"react\";\r\n\r\nexport default function CalendlyEmbed({ url, minHeight }: { url: string; minHeight?: string }) {\r\n  useEffect(() => {\r\n    const head = document.querySelector(\"head\");\r\n    const script = document.createElement(\"script\");\r\n    script.setAttribute(\"src\", \"https://assets.calendly.com/assets/external/widget.js\");\r\n    head?.appendChild(script);\r\n  }, []);\r\n\r\n  return (\r\n    <div\r\n      className=\"calendly-inline-widget\"\r\n      data-url={url}\r\n      style={{ minHeight: minHeight || \"650px\", width: \"100%\" }}\r\n    ></div>\r\n  );\r\n}\r\n",
+      "type": "registry:component",
+      "target": "components/ndx/calendly-embedding.tsx"
+    }
+  ]
+}

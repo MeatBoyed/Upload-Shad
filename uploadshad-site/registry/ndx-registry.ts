@@ -11,6 +11,9 @@ export const NDXRegistry: Registry = [
     type: "registry:component",
     files: ["component/ndx/calendly-embedding.tsx"],
   },
+  {
+    name: "data-table",
+    type: "registry:component",
+    files: ["component/ndx/calendly-embedding.tsx"],
+  },
 ];
-
-// export const uploadShadAccessories: Registry = [];
