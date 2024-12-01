@@ -59,6 +59,17 @@ export const docsConfig: DocsConfig = {
     },
 
     {
+      title: "Nerf Designs X",
+      items: [
+        {
+          title: "Branding Footer",
+          href: "/ndx/branding-footer",
+          items: [],
+        },
+      ],
+    },
+
+    {
       title: "The Creator",
       items: [
         {

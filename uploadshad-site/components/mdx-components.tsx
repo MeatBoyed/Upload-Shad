@@ -19,6 +19,7 @@ import {
 // import { ComponentPreview } from "./component-preview";
 // import { ReactHookFormDemo, ShadcnFormDemo } from "./form-demos";
 import { UploadShadPreview } from "./previews/uploadshad-preview";
+import { BrandingFooterPreview } from "./previews/branding-footer-preview";
 import { UploadShadFormPreview } from "./previews/uploadshad-form-preview";
 
 const components = {
@@ -194,6 +195,7 @@ const components = {
   // ReactHookFormDemo,
   UploadShadPreview,
   UploadShadFormPreview,
+  BrandingFooterPreview,
 };
 
 interface MdxProps {

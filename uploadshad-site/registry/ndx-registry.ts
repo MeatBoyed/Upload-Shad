@@ -6,6 +6,11 @@ export const NDXRegistry: Registry = [
     type: "registry:component",
     files: ["component/ndx/branding-footer.tsx"],
   },
+  {
+    name: "calendly-embedding",
+    type: "registry:component",
+    files: ["component/ndx/calendly-embedding.tsx"],
+  },
 ];
 
 // export const uploadShadAccessories: Registry = [];
