@@ -1,0 +1,25 @@
+---
+title: Calendly Popup Card- Nerf Designs
+description: Calendly Embedding wrapper.
+---
+
+<CalendlyDialogPreview />
+<br />
+
+### Overview
+
+The Calendly Dialog is a wrapper & conversion for the Calendly booking link
+embedding.
+
+The Dialog is composed to accept a children, which is any component you which to be
+the "trigger" for the dialog (like a Button for example).
+
+## Performance Consideration
+
+I would strongly recommend to [Lazy Load (Dynamic import)](https://nextjs.org/docs/pages/building-your-application/optimizing/lazy-loading)
+the Calendly Dialog component to mitigate any Performance issues.
+
+##### Aside
+
+It is recommended to store your Calendly Link as an environment variable, or in an
+appropriate configuration file.

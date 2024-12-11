@@ -1,0 +1,12 @@
+{
+  "name": "calendly-dialog",
+  "type": "registry:component",
+  "files": [
+    {
+      "path": "component/ndx/calendly-dialog.tsx",
+      "content": "\"use client\";\r\n\r\nimport { Dialog, DialogContent, DialogTrigger } from \"@/components/ui/dialog\";\r\nimport React, { PropsWithChildren, useEffect } from \"react\";\r\n\r\nexport default function CalendlyDialog({ children, url }: PropsWithChildren & { url: string }) {\r\n  return (\r\n    <Dialog>\r\n      <DialogTrigger>{children}</DialogTrigger>\r\n      <DialogContent className=\"max-w-2xl  pt-2\">\r\n        <CalendlyEmbed url={url} />\r\n      </DialogContent>\r\n    </Dialog>\r\n  );\r\n}\r\n\r\nexport function CalendlyEmbed({ url, minHeight }: { url: string; minHeight?: string }) {\r\n  useEffect(() => {\r\n    const head = document.querySelector(\"head\");\r\n    const script = document.createElement(\"script\");\r\n    script.setAttribute(\"src\", \"https://assets.calendly.com/assets/external/widget.js\");\r\n    head?.appendChild(script);\r\n  }, []);\r\n\r\n  return (\r\n    <div\r\n      className=\"calendly-inline-widget\"\r\n      data-url={url}\r\n      style={{ minHeight: minHeight || \"650px\", width: \"100%\" }}\r\n    ></div>\r\n  );\r\n}\r\n",
+      "type": "registry:component",
+      "target": "components/ndx/calendly-dialog.tsx"
+    }
+  ]
+}

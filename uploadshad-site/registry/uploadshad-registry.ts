@@ -1,3 +1,4 @@
+import { env } from "process";
 import { Registry } from "./schema";
 
 export const uploadshadRegistry: Registry = [
@@ -9,9 +10,9 @@ export const uploadshadRegistry: Registry = [
       "button",
       "scroll-area",
       "aspect-ratio",
-      "http://localhost:3000/registry/uploadshad-hooks.json",
-      "http://localhost:3000/registry/uploadshad-utils.json",
-      "http://localhost:3000/registry/uploadshad-api.json",
+      `${env.NEXT_PUBLIC_HOST_URL}/registry/uploadshad-hooks.json`,
+      `${env.NEXT_PUBLIC_HOST_URL}/registry/uploadshad-utils.json`,
+      `${env.NEXT_PUBLIC_HOST_URL}/registry/uploadshad-api.json`,
     ],
     dependencies: [
       "zod",

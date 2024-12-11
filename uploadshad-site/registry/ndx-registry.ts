@@ -7,13 +7,13 @@ export const NDXRegistry: Registry = [
     files: ["component/ndx/branding-footer.tsx"],
   },
   {
-    name: "calendly-embedding",
+    name: "calendly-dialog",
     type: "registry:component",
-    files: ["component/ndx/calendly-embedding.tsx"],
+    files: ["component/ndx/calendly-dialog.tsx"],
   },
   {
     name: "data-table",
     type: "registry:component",
-    files: ["component/ndx/calendly-embedding.tsx"],
+    files: ["component/ndx/calendly-dialog.tsx"],
   },
 ];

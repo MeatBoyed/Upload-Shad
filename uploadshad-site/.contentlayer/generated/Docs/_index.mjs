@@ -10,5 +10,6 @@ import docs__uploadshad__advancedUsage__errorHandlingMdx from './docs__uploadsha
 import docs__uploadshad__advancedUsage__filesPreviewerMdx from './docs__uploadshad__advanced-usage__files-previewer.mdx.json' assert { type: 'json' }
 import docs__uploadshad__advancedUsage__stateManagementMdx from './docs__uploadshad__advanced-usage__state-management.mdx.json' assert { type: 'json' }
 import docs__uploadshad__advancedUsage__uploadshadMdx from './docs__uploadshad__advanced-usage__uploadshad.mdx.json' assert { type: 'json' }
+import docs__ndx__calendlyDialogPreviewMdx from './docs__ndx__calendly-dialog-preview.mdx.json' assert { type: 'json' }
 
-export const allDocs = [docs__charlesRossouwMdx, docs__installationMdx, docs__introductionMdx, docs__uploadshadShadcnFormIntegrationMdx, docs__ndx__brandingFooterMdx, docs__uploadshad__advancedUsage__customizingStylesMdx, docs__uploadshad__advancedUsage__errorHandlingMdx, docs__uploadshad__advancedUsage__filesPreviewerMdx, docs__uploadshad__advancedUsage__stateManagementMdx, docs__uploadshad__advancedUsage__uploadshadMdx]
+export const allDocs = [docs__charlesRossouwMdx, docs__installationMdx, docs__introductionMdx, docs__uploadshadShadcnFormIntegrationMdx, docs__ndx__brandingFooterMdx, docs__uploadshad__advancedUsage__customizingStylesMdx, docs__uploadshad__advancedUsage__errorHandlingMdx, docs__uploadshad__advancedUsage__filesPreviewerMdx, docs__uploadshad__advancedUsage__stateManagementMdx, docs__uploadshad__advancedUsage__uploadshadMdx, docs__ndx__calendlyDialogPreviewMdx]

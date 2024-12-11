@@ -21,6 +21,7 @@ import {
 import { UploadShadPreview } from "./previews/uploadshad-preview";
 import { BrandingFooterPreview } from "./previews/branding-footer-preview";
 import { UploadShadFormPreview } from "./previews/uploadshad-form-preview";
+import { CalendlyDialogPreview } from "./previews/calendly-dialog-preview";
 
 const components = {
   h1: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
@@ -196,6 +197,7 @@ const components = {
   UploadShadPreview,
   UploadShadFormPreview,
   BrandingFooterPreview,
+  CalendlyDialogPreview,
 };
 
 interface MdxProps {

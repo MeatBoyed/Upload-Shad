@@ -62,6 +62,11 @@ export const docsConfig: DocsConfig = {
       title: "Nerf Designs X",
       items: [
         {
+          title: "Calendly Dialog",
+          href: "/ndx/calendly-dialog-preview",
+          items: [],
+        },
+        {
           title: "Branding Footer",
           href: "/ndx/branding-footer",
           items: [],

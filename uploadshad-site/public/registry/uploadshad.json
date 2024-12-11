@@ -18,9 +18,9 @@
     "button",
     "scroll-area",
     "aspect-ratio",
-    "http://localhost:3000/registry/uploadshad-hooks.json",
-    "http://localhost:3000/registry/uploadshad-utils.json",
-    "http://localhost:3000/registry/uploadshad-api.json"
+    "undefined/registry/uploadshad-hooks.json",
+    "undefined/registry/uploadshad-utils.json",
+    "undefined/registry/uploadshad-api.json"
   ],
   "files": [
     {
