@@ -24,6 +24,7 @@ export const DataTableRegistry: Registry = [
       "component/ndx/data-table/data-table-row-actions.tsx",
       "component/ndx/data-table/data-table-tool-bar.tsx",
       "component/ndx/data-table/data-table-view-toggle.tsx",
+      "component/ndx/data-table/data-table-columns-example.tsx",
     ],
   },
 ];

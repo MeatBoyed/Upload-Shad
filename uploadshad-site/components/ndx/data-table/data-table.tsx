@@ -29,8 +29,8 @@ import {
 
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { DataTablePagination } from "@/registry/component/ndx/data-table/data-table-pagination";
-import { DataTableToolbar, Filter } from "@/registry/component/ndx/data-table/data-table-tool-bar";
+import { DataTablePagination } from "@/components/ndx/data-table/data-table-pagination";
+import { DataTableToolbar, Filter } from "@/components/ndx/data-table/data-table-tool-bar";
 
 /**
  * Props for the DataTable component.

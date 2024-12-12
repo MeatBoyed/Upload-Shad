@@ -7,7 +7,7 @@ interface DocsConfig {
 export const docsConfig: DocsConfig = {
   sidebarNav: [
     {
-      title: "Getting started",
+      title: "UploadShad - Getting started",
       items: [
         {
           title: "Overview",
@@ -27,7 +27,7 @@ export const docsConfig: DocsConfig = {
       ],
     },
     {
-      title: "Advanced Usage",
+      title: "UploadShad - Advanced Usage",
       items: [
         {
           title: "UploadShad",
@@ -57,19 +57,38 @@ export const docsConfig: DocsConfig = {
         },
       ],
     },
-
+    {
+      title: "Data Table - Getting Started",
+      items: [
+        {
+          title: "Overview",
+          href: "/datatable/data-table-overview",
+          items: [],
+        },
+      ],
+    },
     {
       title: "Nerf Designs X",
       items: [
         {
-          title: "Calendly Dialog",
-          href: "/ndx/calendly-dialog-preview",
-          items: [],
-        },
-        {
           title: "Branding Footer",
           href: "/ndx/branding-footer",
           items: [],
+        },
+        {
+          title: "Calendly Dialog",
+          href: "/ndx/calendly-dialog",
+          items: [],
+        },
+        {
+          title: "Data Table",
+          items: [
+            {
+              title: "API Refernce",
+              href: "/ndx/data-table-api-reference",
+              items: [],
+            },
+          ],
         },
       ],
     },

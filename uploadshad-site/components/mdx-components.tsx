@@ -22,8 +22,14 @@ import { UploadShadPreview } from "./previews/uploadshad-preview";
 import { BrandingFooterPreview } from "./previews/branding-footer-preview";
 import { UploadShadFormPreview } from "./previews/uploadshad-form-preview";
 import { CalendlyDialogPreview } from "./previews/calendly-dialog-preview";
+import { DataTablePreview } from "./previews/data-table-preivew";
 
 const components = {
+  UploadShadPreview,
+  UploadShadFormPreview,
+  BrandingFooterPreview,
+  CalendlyDialogPreview,
+  DataTablePreview,
   h1: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h1 className={cn("font-heading mt-2 scroll-m-20 text-4xl font-bold", className)} {...props} />
   ),
@@ -194,10 +200,6 @@ const components = {
   // ComponentPreview,
   // ShadcnFormDemo,
   // ReactHookFormDemo,
-  UploadShadPreview,
-  UploadShadFormPreview,
-  BrandingFooterPreview,
-  CalendlyDialogPreview,
 };
 
 interface MdxProps {

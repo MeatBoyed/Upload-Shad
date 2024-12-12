@@ -11,9 +11,4 @@ export const NDXRegistry: Registry = [
     type: "registry:component",
     files: ["component/ndx/calendly-dialog.tsx"],
   },
-  {
-    name: "data-table",
-    type: "registry:component",
-    files: ["component/ndx/calendly-dialog.tsx"],
-  },
 ];
