@@ -58,11 +58,16 @@ export const docsConfig: DocsConfig = {
       ],
     },
     {
-      title: "Data Table - Getting Started",
+      title: "Data Table",
       items: [
         {
           title: "Overview",
-          href: "/datatable/data-table-overview",
+          href: "/datatable/overview",
+          items: [],
+        },
+        {
+          title: "Installation",
+          href: "/datatable/installation",
           items: [],
         },
       ],
@@ -79,16 +84,6 @@ export const docsConfig: DocsConfig = {
           title: "Calendly Dialog",
           href: "/ndx/calendly-dialog",
           items: [],
-        },
-        {
-          title: "Data Table",
-          items: [
-            {
-              title: "API Refernce",
-              href: "/ndx/data-table-api-reference",
-              items: [],
-            },
-          ],
         },
       ],
     },
