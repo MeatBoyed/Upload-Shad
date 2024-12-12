@@ -51,9 +51,10 @@ export function DataTableToolbar<TData>({
         {/* Render out Provided filters */}
         {filters &&
           filters.map(
-            (filter) =>
+            (filter, index) =>
               table.getColumn(filter.column) && (
                 <DataTableFacetedFilter
+                  key={index}
                   column={table.getColumn(filter.column)}
                   title={filter.title}
                   options={filter.options}
